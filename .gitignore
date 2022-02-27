@@ -1,0 +1,10 @@
+.env
+package.json
+node_modules
+jdcookie.txt
+box.dat
+logs
+.idea
+.history
+wskey.text
+wskey_ptkey.js
