@@ -6,7 +6,7 @@
 // dotenv.config();
 const fs = require('fs');
 let CookieJDs = [''];
-if (fs.stat('./jdcookie.txt')) {
+if (fs.existsSync('./jdcookie.txt')) {
   const jdcookie = fs.readFileSync('./jdcookie.txt', 'utf8');
   if (jdcookie) {
     if (jdcookie.indexOf('&') > -1) {

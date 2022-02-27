@@ -8,3 +8,6 @@ logs
 wskey.text
 wskey_ptkey.js
 package-lock.json
+task/jdCookie.js
+task/ql.js
+task/sendNotify.js
