@@ -3,20 +3,22 @@ cron 0 5,16 * * *
 */
 const $ = new Env('东东农场只助力版');
 const fs = require('fs');
-let cookiesArr = [];
-let cookie = '';
-let isBox = false;
-let notify;
-let allMessage = '';
-let newShareCodes = [];
-let ttShareCodes = [];
-let message = '';
-let subTitle = '';
-let option = {};
-let jdNotify = false; // 是否关闭通知，false打开通知推送，true关闭通知推送
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
-let NowHour = new Date().getHours();
-let llhelp = true;
+let cookiesArr = [],
+  cookie = '',
+  isBox = false,
+  notify = '',
+  allMessage = '',
+  newShareCodes = [],
+  ttShareCodes = [],
+  message = '',
+  subTitle = '',
+  option = {},
+  jdNotify = false, // 是否关闭通知，false打开通知推送，true关闭通知推送
+  NowHour = new Date().getHours(),
+  llhelp = true,
+  lnrun = 0,
+  llgetshare = false;
 if ($.isNode() && process.env.CC_NOHELPAFTER8) {
   if (process.env.CC_NOHELPAFTER8 == 'true') {
     if (NowHour > 8) {
@@ -26,10 +28,10 @@ if ($.isNode() && process.env.CC_NOHELPAFTER8) {
   }
 }
 
-let boolneedUpdate = false;
-let strShare = './Fruit_ShareCache.json';
-let Fileexists = fs.existsSync(strShare);
-let TempShareCache = [];
+let boolneedUpdate = false,
+  strShare = './Fruit_ShareCache.json',
+  Fileexists = fs.existsSync(strShare),
+  TempShareCache = [];
 if (Fileexists) {
   console.log('检测到东东农场缓存文件Fruit_ShareCache.json，载入...');
   TempShareCache = fs.readFileSync(strShare, 'utf-8');
@@ -53,8 +55,7 @@ if (WP_APP_TOKEN_ONE) {
     console.log(`农场只在9点后和22点前启用一对一推送，故此次暂时取消一对一推送...`);
   }
 } else console.log(`检测到未配置Wxpusher的Token，禁用一对一推送...`);
-let lnrun = 0;
-let llgetshare = false;
+
 !(async () => {
   await requireConfig();
   if (!cookiesArr[0]) {
@@ -203,9 +204,9 @@ async function turntableFarm() {
 // 助力好友
 async function masterHelpShare() {
   await initForFarm();
-  let salveHelpAddWater = 0;
-  let remainTimes = 3; // 今日剩余助力次数,默认3次（京东农场每人每天3次助力机会）。
-  let helpSuccessPeoples = ''; // 成功助力好友
+  let salveHelpAddWater = 0,
+    remainTimes = 3, // 今日剩余助力次数,默认3次（京东农场每人每天3次助力机会）。
+    helpSuccessPeoples = ''; // 成功助力好友
   if (llhelp) {
     console.log('开始助力好友');
     for (let code of newShareCodes) {
@@ -261,8 +262,8 @@ async function masterHelpShare() {
 async function GetCollect() {
   try {
     console.log(`\n【京东账号${$.index}（${$.UserName}）的${$.name}好友互助码】`);
-    let llfound = false;
-    let strShareCode = '';
+    let llfound = false,
+      strShareCode = '';
     if (TempShareCache) {
       for (let j = 0; j < TempShareCache.length; j++) {
         if (TempShareCache[j].pt_pin == $.UserName) {

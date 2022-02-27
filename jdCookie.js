@@ -5,8 +5,17 @@
 // const dotenv = require('dotenv');
 // dotenv.config();
 const fs = require('fs');
-const jdcookie = fs.readFileSync('./jdcookie.txt', 'utf8');
 let CookieJDs = [''];
+if (fs.stat('./jdcookie.txt')) {
+  const jdcookie = fs.readFileSync('./jdcookie.txt', 'utf8');
+  if (jdcookie) {
+    if (jdcookie.indexOf('&') > -1) {
+      CookieJDs = jdcookie.split('&');
+    } else if (jdcookie.indexOf('&')) {
+      CookieJDs = jdcookie.split('\n');
+    }
+  }
+}
 // 判断环境变量里面是否有京东ck
 if (process.env.JD_COOKIE) {
   if (process.env.JD_COOKIE.indexOf('&') > -1) {
@@ -15,14 +24,6 @@ if (process.env.JD_COOKIE) {
     CookieJDs = process.env.JD_COOKIE.split('\n');
   } else {
     CookieJDs = [process.env.JD_COOKIE];
-  }
-}
-
-if (jdcookie) {
-  if (jdcookie.indexOf('&') > -1) {
-    CookieJDs = jdcookie.split('&');
-  } else if (jdcookie.indexOf('&')) {
-    CookieJDs = jdcookie.split('\n');
   }
 }
 
