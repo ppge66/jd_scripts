@@ -1,5 +1,5 @@
 /*
-cron 5 6-18/6 * * * 
+5 6-18/6 * * * 
 */
 const $ = new Env('东东农场只做任务版');
 let { cookiesArr, cookie, notify, allMessage } = newFunction(),
