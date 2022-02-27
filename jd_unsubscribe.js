@@ -1,5 +1,5 @@
 /*
-corn:55 21 * * * 
+cron:55 21 * * * 
  */
 const $ = new Env('取关京东店铺和商品'),
   // Node.js用户请在jdCookie.js处填写京东ck;
