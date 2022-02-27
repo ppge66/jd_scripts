@@ -1,5 +1,5 @@
 /*
-cron "0 6 * * *" j
+cron:0 6 * * * 
 */
 // 详细说明参考 https://github.com/ccwav/QLScript2.
 const $ = new Env('京东极速版任务'),

@@ -1,5 +1,5 @@
 /*
-15 6-18/6 * * * 
+cron:15 6-18/6 * * * 
 */
 const $ = new Env('东东萌宠互助版');
 let cookiesArr = [],

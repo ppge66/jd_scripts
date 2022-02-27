@@ -1,5 +1,5 @@
 /*
-1 7-21/2 * * * 
+cron:1 7-21/2 * * * 
 */
 const $ = new Env('种豆得豆互助版');
 // Node.js用户请在jdCookie.js处填写京东ck;

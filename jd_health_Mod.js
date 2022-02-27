@@ -1,5 +1,5 @@
 /*
-13 0,6,22 * * * jd_health.js
+cron:13 0,6,22 * * * 
  */
 const $ = new Env('东东健康社区互助版'),
   jdCookieNode = $.isNode() ? require('./jdCookie.js') : '',

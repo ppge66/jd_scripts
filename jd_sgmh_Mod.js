@@ -1,6 +1,5 @@
 /*
-
-20 8 * * * 
+cron:20 8 * * * 
  */
 const $ = new Env('闪购盲盒互助版'),
   // Node.js用户请在jdCookie.js处填写京东ck;

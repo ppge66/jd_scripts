@@ -1,5 +1,5 @@
 /*
-30 7 * * * 
+cron:30 7 * * * 
 */
 const $ = new Env('东东乐园'),
   // Node.js用户请在jdCookie.js处填写京东ck;

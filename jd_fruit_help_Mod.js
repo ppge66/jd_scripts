@@ -1,5 +1,5 @@
 /*
-0 5,16 * * *
+cron:0 5,16 * * *
 */
 const $ = new Env('东东农场只助力版');
 const fs = require('fs');
