@@ -11,3 +11,4 @@ package-lock.json
 task/jdCookie.js
 task/ql.js
 task/sendNotify.js
+.DS_Store
