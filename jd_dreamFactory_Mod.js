@@ -2,26 +2,26 @@
 cron:10 0,6-23 * * * 
  */
 
-const $ = new Env('京喜工厂互助版'),
-  JD_API_HOST = 'https://m.jingxi.com',
-  notify = $.isNode() ? require('./sendNotify') : '',
-  randomCount = $.isNode() ? 20 : 5,
-  jxOpenUrl = `openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%22des%22:%20%22m%22,%20%22url%22:%20%22https://wqsd.jd.com/pingou/dream_factory/index.html%22%20%7D`,
-  inviteCodes = [],
-  jdCookieNode = $.isNode() ? require('./jdCookie.js') : '',
-  // 通知级别 1=生产完毕可兑换通知;2=可兑换通知+生产超时通知+兑换超时通知;3=可兑换通知+生产超时通知+兑换超时通知+未选择商品生产通知(前提：已开通京喜工厂活动);默认第2种通知
-  notifyLevel = $.isNode() ? process.env.JXGC_NOTIFY_LEVEL || 2 : 2;
+const $ = new Env('京喜工厂互助版');
+const JD_API_HOST = 'https://m.jingxi.com';
+const notify = $.isNode() ? require('./sendNotify') : '';
+const randomCount = $.isNode() ? 20 : 5;
+const jxOpenUrl = `openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%22des%22:%20%22m%22,%20%22url%22:%20%22https://wqsd.jd.com/pingou/dream_factory/index.html%22%20%7D`;
+const inviteCodes = [];
+const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
+// 通知级别 1=生产完毕可兑换通知;2=可兑换通知+生产超时通知+兑换超时通知;3=可兑换通知+生产超时通知+兑换超时通知+未选择商品生产通知(前提：已开通京喜工厂活动);默认第2种通知
+const notifyLevel = $.isNode() ? process.env.JXGC_NOTIFY_LEVEL || 2 : 2;
 
-let tuanActiveId = ``,
-  hasSend = false,
-  cookiesArr = [],
-  cookie = '',
-  message = '',
-  allMessage = '',
-  jdDreamFactoryShareArr = [],
-  newShareCodes,
-  WP_APP_TOKEN_ONE = '',
-  time = new Date().getHours();
+let tuanActiveId = ``;
+let hasSend = false;
+let cookiesArr = [];
+let cookie = '';
+let message = '';
+let allMessage = '';
+let jdDreamFactoryShareArr = [];
+let newShareCodes;
+let WP_APP_TOKEN_ONE = '';
+let time = new Date().getHours();
 $.tuanIds = [];
 $.appId = 10001;
 $.newShareCode = [];
@@ -171,12 +171,12 @@ function getActiveId(url = 'https://wqsd.jd.com/pingou/dream_factory/index.html'
             const tuanConfigs = (data[0].skinConfig[0].adConfig || []).filter((vo) => !!vo && vo['channel'] === 'h5');
             if (tuanConfigs && tuanConfigs.length) {
               for (let item of tuanConfigs) {
-                const start = item.start,
-                  end = item.end,
-                  link = item.link,
-                  start_time = new Date(item.start).getTime(),
-                  end_time = new Date(item.end).getTime(),
-                  now_time = Date.now();
+                const start = item.start;
+                const end = item.end;
+                const link = item.link;
+                const start_time = new Date(item.start).getTime();
+                const end_time = new Date(item.end).getTime();
+                const now_time = Date.now();
                 if (start_time <= now_time && end_time > now_time) {
                   if (link && link.match(/activeId=(.*),/) && link.match(/activeId=(.*),/)[1]) {
                     console.log(`\n团活动ID: ${link.match(/activeId=(.*),/)[1]}\n有效时间：${start} - ${end}`);
@@ -631,9 +631,9 @@ function userInfo() {
               $.encryptPin = '';
               $.shelvesList = [];
               if (data.factoryList && data.productionList) {
-                const production = data.productionList[0],
-                  factory = data.factoryList[0],
-                  productionStage = data.productionStage;
+                const production = data.productionList[0];
+                const factory = data.factoryList[0];
+                const productionStage = data.productionStage;
                 $.factoryId = factory.factoryId; // 工厂ID
                 $.productionId = production.productionId; // 商品ID
                 $.commodityDimId = production.commodityDimId;
@@ -1031,8 +1031,8 @@ async function tuanActivity() {
 // 如果团ID不为空，则查询QueryTuan()
 function QueryActiveConfig() {
   return new Promise((resolve) => {
-    const body = `activeId=${escape(tuanActiveId)}&tuanId=`,
-      options = taskTuanUrl(`QueryActiveConfig`, body, `_time,activeId,tuanId`);
+    const body = `activeId=${escape(tuanActiveId)}&tuanId=`;
+    const options = taskTuanUrl(`QueryActiveConfig`, body, `_time,activeId,tuanId`);
     $.get(options, async (err, resp, data) => {
       try {
         if (err) {
@@ -1060,8 +1060,8 @@ function QueryActiveConfig() {
 }
 function QueryTuan(activeId, tuanId) {
   return new Promise((resolve) => {
-    const body = `activeId=${escape(activeId)}&tuanId=${escape(tuanId)}`,
-      options = taskTuanUrl(`QueryTuan`, body, `_time,activeId,tuanId`);
+    const body = `activeId=${escape(activeId)}&tuanId=${escape(tuanId)}`;
+    const options = taskTuanUrl(`QueryTuan`, body, `_time,activeId,tuanId`);
     $.get(options, async (err, resp, data) => {
       try {
         if (err) {
@@ -1088,8 +1088,8 @@ function QueryTuan(activeId, tuanId) {
 // 开团API
 function CreateTuan() {
   return new Promise((resolve) => {
-    const body = `activeId=${escape(tuanActiveId)}&isOpenApp=1`,
-      options = taskTuanUrl(`CreateTuan`, body, '_time,activeId,isOpenApp');
+    const body = `activeId=${escape(tuanActiveId)}&isOpenApp=1`;
+    const options = taskTuanUrl(`CreateTuan`, body, '_time,activeId,isOpenApp');
     $.get(options, async (err, resp, data) => {
       try {
         if (err) {
@@ -1123,8 +1123,8 @@ function CreateTuan() {
 
 function JoinTuan(tuanId, stk = '_time,activeId,tuanId') {
   return new Promise((resolve) => {
-    const body = `activeId=${escape(tuanActiveId)}&tuanId=${escape(tuanId)}`,
-      options = taskTuanUrl(`JoinTuan`, body, '_time,activeId,tuanId');
+    const body = `activeId=${escape(tuanActiveId)}&tuanId=${escape(tuanId)}`;
+    const options = taskTuanUrl(`JoinTuan`, body, '_time,activeId,tuanId');
     $.get(options, async (err, resp, data) => {
       try {
         if (err) {
@@ -1155,8 +1155,8 @@ function JoinTuan(tuanId, stk = '_time,activeId,tuanId') {
 // 查询所有的团情况(自己开团以及参加别人的团)
 function QueryAllTuan() {
   return new Promise((resolve) => {
-    const body = `activeId=${escape(tuanActiveId)}&pageNo=1&pageSize=10`,
-      options = taskTuanUrl(`QueryAllTuan`, body, '_time,activeId,pageNo,pageSize');
+    const body = `activeId=${escape(tuanActiveId)}&pageNo=1&pageSize=10`;
+    const options = taskTuanUrl(`QueryAllTuan`, body, '_time,activeId,pageNo,pageSize');
     $.get(options, async (err, resp, data) => {
       try {
         if (err) {
@@ -1201,8 +1201,8 @@ function QueryAllTuan() {
 // 开团人的领取奖励API
 function tuanAward(activeId, tuanId, isTuanLeader = true) {
   return new Promise((resolve) => {
-    const body = `activeId=${escape(activeId)}&tuanId=${escape(tuanId)}`,
-      options = taskTuanUrl(`Award`, body, '_time,activeId,tuanId');
+    const body = `activeId=${escape(activeId)}&tuanId=${escape(tuanId)}`;
+    const options = taskTuanUrl(`Award`, body, '_time,activeId,tuanId');
     $.get(options, async (err, resp, data) => {
       try {
         if (err) {
@@ -1500,26 +1500,26 @@ function newtasksysUrl(functionId, taskId, stk) {
 修改时间戳转换函数，京喜工厂原版修改
  */
 Date.prototype.Format = function (fmt) {
-  let e,
-    n = this,
-    d = fmt,
-    l = {
-      'M+': n.getMonth() + 1,
-      'd+': n.getDate(),
-      'D+': n.getDate(),
-      'h+': n.getHours(),
-      'H+': n.getHours(),
-      'm+': n.getMinutes(),
-      's+': n.getSeconds(),
-      'w+': n.getDay(),
-      'q+': Math.floor((n.getMonth() + 3) / 3),
-      'S+': n.getMilliseconds(),
-    };
+  let e;
+  let n = this;
+  let d = fmt;
+  let l = {
+    'M+': n.getMonth() + 1,
+    'd+': n.getDate(),
+    'D+': n.getDate(),
+    'h+': n.getHours(),
+    'H+': n.getHours(),
+    'm+': n.getMinutes(),
+    's+': n.getSeconds(),
+    'w+': n.getDay(),
+    'q+': Math.floor((n.getMonth() + 3) / 3),
+    'S+': n.getMilliseconds(),
+  };
   /(y+)/i.test(d) && (d = d.replace(RegExp.$1, ''.concat(n.getFullYear()).substr(4 - RegExp.$1.length)));
   for (let k in l) {
     if (new RegExp('('.concat(k, ')')).test(d)) {
-      var t,
-        a = k === 'S+' ? '000' : '00';
+      var t;
+      let a = k === 'S+' ? '000' : '00';
       d = d.replace(RegExp.$1, RegExp.$1.length == 1 ? l[k] : (''.concat(a) + l[k]).substr(''.concat(l[k]).length));
     }
   }
@@ -1622,12 +1622,12 @@ function decrypt(time, stk, type, url) {
  */
 function getUrlData(url, name) {
   if (typeof URL !== 'undefined') {
-    let urls = new URL(url),
-      data = urls.searchParams.get(name);
+    let urls = new URL(url);
+    let data = urls.searchParams.get(name);
     return data ? data : '';
   } else {
-    const query = url.match(/\?.*/)[0].substring(1),
-      vars = query.split('&');
+    const query = url.match(/\?.*/)[0].substring(1);
+    const vars = query.split('&');
     for (let i = 0; i < vars.length; i++) {
       const pair = vars[i].split('=');
       if (pair[0] === name) {
@@ -1643,9 +1643,9 @@ function getUrlData(url, name) {
  * @returns {string}
  */
 function generateFp() {
-  let e = '0123456789',
-    a = 13,
-    i = '';
+  let e = '0123456789';
+  let a = 13;
+  let i = '';
   for (; a--; ) i += e[(Math.random() * e.length) | 0];
   return (i + Date.now()).slice(0, 16);
 }

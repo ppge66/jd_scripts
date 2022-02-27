@@ -21,7 +21,7 @@ module.exports = {
     // 自定义你的规则
     // allowShortCircuit: true,
     // allowTernary: true,
-    'one-var': ['error', { initialized: 'consecutive' }],
+    'one-var': ['error', { initialized: 'never' }],
     complexity: 0,
     'no-unused-expressions': 0,
     'max-depth': 0,

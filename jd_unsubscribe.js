@@ -1,19 +1,19 @@
 /*
 cron:55 21 * * * 
  */
-const $ = new Env('取关京东店铺和商品'),
-  // Node.js用户请在jdCookie.js处填写京东ck;
-  jdCookieNode = $.isNode() ? require('./jdCookie.js') : '',
-  notify = $.isNode() ? require('./sendNotify') : '',
-  jdNotify = $.getdata('jdUnsubscribeNotify'), // 是否关闭通知，false打开通知推送，true关闭通知推送
-  JD_API_HOST = 'https://wq.jd.com/fav';
+const $ = new Env('取关京东店铺和商品');
+// Node.js用户请在jdCookie.js处填写京东ck;
+const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
+const notify = $.isNode() ? require('./sendNotify') : '';
+const jdNotify = $.getdata('jdUnsubscribeNotify'); // 是否关闭通知，false打开通知推送，true关闭通知推送
+const JD_API_HOST = 'https://wq.jd.com/fav';
 // IOS等用户直接用NobyDa的jd cookie
-let cookiesArr = [],
-  cookie = '',
-  goodPageSize = $.getdata('jdUnsubscribePageSize') || 20, // 运行一次取消多全部已关注的商品。数字0表示不取关任何商品
-  shopPageSize = $.getdata('jdUnsubscribeShopPageSize') || 20, // 运行一次取消全部已关注的店铺。数字0表示不取关任何店铺
-  stopGoods = $.getdata('jdUnsubscribeStopGoods') || '', // 遇到此商品不再进行取关，此处内容需去商品详情页（自营处）长按拷贝商品信息
-  stopShop = $.getdata('jdUnsubscribeStopShop') || ''; // 遇到此店铺不再进行取关，此处内容请尽量从头开始输入店铺名称
+let cookiesArr = [];
+let cookie = '';
+let goodPageSize = $.getdata('jdUnsubscribePageSize') || 20; // 运行一次取消多全部已关注的商品。数字0表示不取关任何商品
+let shopPageSize = $.getdata('jdUnsubscribeShopPageSize') || 20; // 运行一次取消全部已关注的店铺。数字0表示不取关任何店铺
+let stopGoods = $.getdata('jdUnsubscribeStopGoods') || ''; // 遇到此商品不再进行取关，此处内容需去商品详情页（自营处）长按拷贝商品信息
+let stopShop = $.getdata('jdUnsubscribeStopShop') || ''; // 遇到此店铺不再进行取关，此处内容请尽量从头开始输入店铺名称
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item]);

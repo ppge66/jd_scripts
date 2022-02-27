@@ -2,20 +2,20 @@
 cron:5 6-18/6 * * * 
 */
 const $ = new Env('东东农场只做任务版');
-let { cookiesArr, cookie, notify, allMessage } = newFunction(),
-  // 助力好友分享码(最多3个,否则后面的助力失败),原因:京东农场每人每天只有3次助力机会
-  // 此此内容是IOS用户下载脚本到本地使用，填写互助码的地方，同一京东账号的好友互助码请使用@符号隔开。
-  // 下面给出两个账号的填写示例（iOS只支持2个京东账号）
+let { cookiesArr, cookie, notify, allMessage } = newFunction();
+// 助力好友分享码(最多3个,否则后面的助力失败),原因:京东农场每人每天只有3次助力机会
+// 此此内容是IOS用户下载脚本到本地使用，填写互助码的地方，同一京东账号的好友互助码请使用@符号隔开。
+// 下面给出两个账号的填写示例（iOS只支持2个京东账号）
 
-  newShareCodes = [],
-  { message, subTitle, option, isFruitFinished } = newFunction_1();
+let newShareCodes = [];
+let { message, subTitle, option, isFruitFinished } = newFunction_1();
 const retainWater = $.isNode() ? (process.env.retainWater ? process.env.retainWater : 100) : $.getdata('retainWater') ? $.getdata('retainWater') : 100; // 保留水滴大于多少g,默认100g;
-let jdNotify = false, // 是否关闭通知，false打开通知推送，true关闭通知推送
-  jdFruitBeanCard = false; // 农场使用水滴换豆卡(如果出现限时活动时100g水换20豆,此时比浇水划算,推荐换豆),true表示换豆(不浇水),false表示不换豆(继续浇水),脚本默认是浇水
-const JD_API_HOST = 'https://api.m.jd.com/client.action',
-  urlSchema = `openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%22des%22:%20%22m%22,%20%22url%22:%20%22https://h5.m.jd.com/babelDiy/Zeus/3KSjXqQabiTuD1cJ28QskrpWoBKT/index.html%22%20%7D`;
-let NowHour = new Date().getHours(),
-  llhelp = false;
+let jdNotify = false; // 是否关闭通知，false打开通知推送，true关闭通知推送
+let jdFruitBeanCard = false; // 农场使用水滴换豆卡(如果出现限时活动时100g水换20豆,此时比浇水划算,推荐换豆),true表示换豆(不浇水),false表示不换豆(继续浇水),脚本默认是浇水
+const JD_API_HOST = 'https://api.m.jd.com/client.action';
+const urlSchema = `openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%22des%22:%20%22m%22,%20%22url%22:%20%22https://h5.m.jd.com/babelDiy/Zeus/3KSjXqQabiTuD1cJ28QskrpWoBKT/index.html%22%20%7D`;
+let NowHour = new Date().getHours();
+let llhelp = false;
 if ($.isNode() && process.env.CC_NOHELPAFTER8) {
   if (process.env.CC_NOHELPAFTER8 == 'true') {
     if (NowHour > 8) {
@@ -25,10 +25,10 @@ if ($.isNode() && process.env.CC_NOHELPAFTER8) {
   }
 }
 const fs = require('fs');
-let boolneedUpdate = false,
-  strShare = './Fruit_ShareCache.json',
-  Fileexists = fs.existsSync(strShare),
-  TempShareCache = [];
+let boolneedUpdate = false;
+let strShare = './Fruit_ShareCache.json';
+let Fileexists = fs.existsSync(strShare);
+let TempShareCache = [];
 if (Fileexists) {
   console.log('检测到东东农场缓存文件Fruit_ShareCache.json，载入...');
   TempShareCache = fs.readFileSync(strShare, 'utf-8');
@@ -52,8 +52,8 @@ if (WP_APP_TOKEN_ONE) {
     console.log(`农场只在9点后和22点前启用一对一推送，故此次暂时取消一对一推送...`);
   }
 } else console.log(`检测到未配置Wxpusher的Token，禁用一对一推送...`);
-let lnrun = 0,
-  llgetshare = false;
+let lnrun = 0;
+let llgetshare = false;
 !(async () => {
   await requireConfig();
   if (!cookiesArr[0]) {
@@ -152,17 +152,17 @@ let lnrun = 0,
     $.done();
   });
 function newFunction_1() {
-  let message = '',
-    subTitle = '',
-    option = {},
-    isFruitFinished = false;
+  let message = '';
+  let subTitle = '';
+  let option = {};
+  let isFruitFinished = false;
   return { message, subTitle, option, isFruitFinished };
 }
 
 function newFunction() {
-  let cookiesArr = [],
-    cookie = '',
-    isBox = false;
+  let cookiesArr = [];
+  let cookie = '';
+  let isBox = false;
   let notify;
   let allMessage = '';
   return { cookiesArr, cookie, notify, allMessage };
@@ -247,10 +247,10 @@ async function doDailyTask() {
   if ($.farmTask.gotBrowseTaskAdInit.f) {
     console.log(`今天已经做过浏览广告任务\n`);
   } else {
-    let adverts = $.farmTask.gotBrowseTaskAdInit.userBrowseTaskAds,
-      browseReward = 0,
-      browseSuccess = 0,
-      browseFail = 0;
+    let adverts = $.farmTask.gotBrowseTaskAdInit.userBrowseTaskAds;
+    let browseReward = 0;
+    let browseSuccess = 0;
+    let browseFail = 0;
     for (let advert of adverts) {
       // 开始浏览广告
       if (advert.limit <= advert.hadFinishedTimes) {
@@ -328,8 +328,8 @@ async function predictionFruit() {
     message += `【结果进度】再浇水${$.farmInfo.toFruitTimes - $.farmInfo.farmUserPro.treeEnergy / 10}次结果\n`;
   }
   // 预测n天后水果课可兑换功能
-  let waterTotalT = ($.farmInfo.farmUserPro.treeTotalEnergy - $.farmInfo.farmUserPro.treeEnergy - $.farmInfo.farmUserPro.totalEnergy) / 10, // 一共还需浇多少次水
-    waterD = Math.ceil(waterTotalT / waterEveryDayT);
+  let waterTotalT = ($.farmInfo.farmUserPro.treeTotalEnergy - $.farmInfo.farmUserPro.treeEnergy - $.farmInfo.farmUserPro.totalEnergy) / 10; // 一共还需浇多少次水
+  let waterD = Math.ceil(waterTotalT / waterEveryDayT);
 
   message += `【预测】${waterD === 1 ? '明天' : waterD === 2 ? '后天' : waterD + '天之后'}(${timeFormat(24 * 60 * 60 * 1000 * waterD + Date.now())}日)可兑换水果🍉`;
 }
@@ -714,8 +714,8 @@ async function getExtraAward() {
         } else {
           str += (item.nickName || '匿名用户') + ',';
         }
-        let date = new Date(item.time),
-          time = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getMinutes();
+        let date = new Date(item.time);
+        let time = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getMinutes();
         console.log(`\n京东昵称【${item.nickName || '匿名用户'}】 在 ${time} 给您助过力\n`);
       });
       message += `【助力您的好友】${str}\n`;
@@ -748,8 +748,8 @@ async function getExtraAward() {
           } else {
             str += (item.nickName || '匿名用户') + ',';
           }
-          let date = new Date(item.time),
-            time = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getMinutes();
+          let date = new Date(item.time);
+          let time = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getMinutes();
           console.log(`\n京东昵称【${item.nickName || '匿名用户'}】 在 ${time} 给您助过力\n`);
         });
         message += `【助力您的好友】${str}\n`;
@@ -761,9 +761,9 @@ async function getExtraAward() {
 // 助力好友
 async function masterHelpShare() {
   await initForFarm();
-  let salveHelpAddWater = 0,
-    remainTimes = 3, // 今日剩余助力次数,默认3次（京东农场每人每天3次助力机会）。
-    helpSuccessPeoples = ''; // 成功助力好友
+  let salveHelpAddWater = 0;
+  let remainTimes = 3; // 今日剩余助力次数,默认3次（京东农场每人每天3次助力机会）。
+  let helpSuccessPeoples = ''; // 成功助力好友
   if (llhelp) {
     console.log('开始助力好友');
     for (let code of newShareCodes) {
@@ -974,8 +974,8 @@ async function doFriendsWater() {
         }
       });
       console.log(`需要浇水的好友列表shareCodes:${JSON.stringify(needWaterFriends)}`);
-      let waterFriendsCount = 0,
-        cardInfoStr = '';
+      let waterFriendsCount = 0;
+      let cardInfoStr = '';
       for (let index = 0; index < needWaterFriends.length; index++) {
         await waterFriendForFarm(needWaterFriends[index]);
         console.log(`为第${index + 1}个好友浇水结果:${JSON.stringify($.waterFriendForFarmRes)}\n`);
@@ -1086,8 +1086,8 @@ async function duck() {
 async function GetCollect() {
   try {
     console.log(`\n【京东账号${$.index}（${$.UserName}）的${$.name}好友互助码】`);
-    let llfound = false,
-      strShareCode = '';
+    let llfound = false;
+    let strShareCode = '';
     if (TempShareCache) {
       for (let j = 0; j < TempShareCache.length; j++) {
         if (TempShareCache[j].pt_pin == $.UserName) {
@@ -1280,8 +1280,8 @@ async function masterHelp() {
  * 水滴雨API
  */
 async function waterRainForFarm() {
-  const functionId = arguments.callee.name.toString(),
-    body = { type: 1, hongBaoTimes: 100, version: 3 };
+  const functionId = arguments.callee.name.toString();
+  const body = { type: 1, hongBaoTimes: 100, version: 3 };
   $.waterRain = await request(functionId, body);
 }
 /**
@@ -1573,4 +1573,4 @@ function jsonParse(str) {
   }
 }
 // prettier-ignore
-function Env(t, e) { "undefined" !== typeof process && JSON.stringify(process.env).indexOf("GITHUB") > -1 && process.exit(0); class s { constructor(t) { this.env = t } send(t, e = "GET") { t = typeof t === "string" ? { url: t } : t; let s = this.get; return e === "POST" && (s = this.post), new Promise((e, i) => { s.call(this, t, (t, s, r) => { t ? i(t) : e(s) }) }) } get(t) { return this.send.call(this.env, t) } post(t) { return this.send.call(this.env, t, "POST") } } return new class { constructor(t, e) { this.name = t, this.http = new s(this), this.data = null, this.dataFile = "box.dat", this.logs = [], this.isMute = !1, this.isNeedRewrite = !1, this.logSeparator = "\n", this.startTime = (new Date).getTime(), Object.assign(this, e), this.log("", `🔔${this.name}, 开始!`) } isNode() { return "undefined" !== typeof module && !!module.exports } isQuanX() { return "undefined" !== typeof $task } isSurge() { return "undefined" !== typeof $httpClient && typeof $loon === "undefined" } isLoon() { return "undefined" !== typeof $loon } toObj(t, e = null) { try { return JSON.parse(t) } catch { return e } } toStr(t, e = null) { try { return JSON.stringify(t) } catch { return e } } getjson(t, e) { let s = e; const i = this.getdata(t); if (i) try { s = JSON.parse(this.getdata(t)) } catch { } return s } setjson(t, e) { try { return this.setdata(JSON.stringify(t), e) } catch { return !1 } } getScript(t) { return new Promise(e => { this.get({ url: t }, (t, s, i) => e(i)) }) } runScript(t, e) { return new Promise(s => { let i = this.getdata("@chavy_boxjs_userCfgs.httpapi"); i = i ? i.replace(/\n/g, "").trim() : i; let r = this.getdata("@chavy_boxjs_userCfgs.httpapi_timeout"); r = r ? Number(r) : 20, r = e && e.timeout ? e.timeout : r; const [o, h] = i.split("@"),  n = { url: `http://${h}/v1/scripting/evaluate`, body: { script_text: t, mock_type: "cron", timeout: r }, headers: { "X-Key": o, Accept: "*/*" } }; this.post(n, (t, e, i) => s(i)) }).catch(t => this.logErr(t)) } loaddata() { if (!this.isNode()) return {}; { this.fs = this.fs ? this.fs : require("fs"), this.path = this.path ? this.path : require("path"); const t = this.path.resolve(this.dataFile),  e = this.path.resolve(process.cwd(), this.dataFile),  s = this.fs.existsSync(t),  i = !s && this.fs.existsSync(e); if (!s && !i) return {}; { const i = s ? t : e; try { return JSON.parse(this.fs.readFileSync(i)) } catch (t) { return {} } } } } writedata() { if (this.isNode()) { this.fs = this.fs ? this.fs : require("fs"), this.path = this.path ? this.path : require("path"); const t = this.path.resolve(this.dataFile),  e = this.path.resolve(process.cwd(), this.dataFile),  s = this.fs.existsSync(t),  i = !s && this.fs.existsSync(e),  r = JSON.stringify(this.data); s ? this.fs.writeFileSync(t, r) : i ? this.fs.writeFileSync(e, r) : this.fs.writeFileSync(t, r) } } lodash_get(t, e, s) { const i = e.replace(/\[(\d+)\]/g, ".$1").split("."); let r = t; for (const t of i) if (r = Object(r)[t], void 0 === r) return s; return r } lodash_set(t, e, s) { return Object(t) !== t ? t : (Array.isArray(e) || (e = e.toString().match(/[^.[\]]+/g) || []), e.slice(0, -1).reduce((t, s, i) => Object(t[s]) === t[s] ? t[s] : t[s] = Math.abs(e[i + 1]) >> 0 == Number(e[i + 1]) ? [] : {}, t)[e[e.length - 1]] = s, t) } getdata(t) { let e = this.getval(t); if (/^@/.test(t)) { const [, s, i] = /^@(.*?)\.(.*?)$/.exec(t),  r = s ? this.getval(s) : ""; if (r) try { const t = JSON.parse(r); e = t ? this.lodash_get(t, i, "") : e } catch (t) { e = "" } } return e } setdata(t, e) { let s = !1; if (/^@/.test(e)) { const [, i, r] = /^@(.*?)\.(.*?)$/.exec(e),  o = this.getval(i),  h = i ? o === "null" ? null : o || "{}" : "{}"; try { const e = JSON.parse(h); this.lodash_set(e, r, t), s = this.setval(JSON.stringify(e), i) } catch (e) { const o = {}; this.lodash_set(o, r, t), s = this.setval(JSON.stringify(o), i) } } else s = this.setval(t, e); return s } getval(t) { return this.isSurge() || this.isLoon() ? $persistentStore.read(t) : this.isQuanX() ? $prefs.valueForKey(t) : this.isNode() ? (this.data = this.loaddata(), this.data[t]) : this.data && this.data[t] || null } setval(t, e) { return this.isSurge() || this.isLoon() ? $persistentStore.write(t, e) : this.isQuanX() ? $prefs.setValueForKey(t, e) : this.isNode() ? (this.data = this.loaddata(), this.data[e] = t, this.writedata(), !0) : this.data && this.data[e] || null } initGotEnv(t) { this.got = this.got ? this.got : require("got"), this.cktough = this.cktough ? this.cktough : require("tough-cookie"), this.ckjar = this.ckjar ? this.ckjar : new this.cktough.CookieJar, t && (t.headers = t.headers ? t.headers : {}, void 0 === t.headers.Cookie && void 0 === t.cookieJar && (t.cookieJar = this.ckjar)) } get(t, e = (() => { })) { t.headers && (delete t.headers["Content-Type"], delete t.headers["Content-Length"]), this.isSurge() || this.isLoon() ? (this.isSurge() && this.isNeedRewrite && (t.headers = t.headers || {}, Object.assign(t.headers, { "X-Surge-Skip-Scripting": !1 })), $httpClient.get(t, (t, s, i) => { !t && s && (s.body = i, s.statusCode = s.status), e(t, s, i) })) : this.isQuanX() ? (this.isNeedRewrite && (t.opts = t.opts || {}, Object.assign(t.opts, { hints: !1 })), $task.fetch(t).then(t => { const { statusCode: s, statusCode: i, headers: r, body: o } = t; e(null, { status: s, statusCode: i, headers: r, body: o }, o) }, t => e(t))) : this.isNode() && (this.initGotEnv(t), this.got(t).on("redirect", (t, e) => { try { if (t.headers["set-cookie"]) { const s = t.headers["set-cookie"].map(this.cktough.Cookie.parse).toString(); s && this.ckjar.setCookieSync(s, null), e.cookieJar = this.ckjar } } catch (t) { this.logErr(t) } }).then(t => { const { statusCode: s, statusCode: i, headers: r, body: o } = t; e(null, { status: s, statusCode: i, headers: r, body: o }, o) }, t => { const { message: s, response: i } = t; e(s, i, i && i.body) })) } post(t, e = (() => { })) { if (t.body && t.headers && !t.headers["Content-Type"] && (t.headers["Content-Type"] = "application/x-www-form-urlencoded"), t.headers && delete t.headers["Content-Length"], this.isSurge() || this.isLoon()) this.isSurge() && this.isNeedRewrite && (t.headers = t.headers || {}, Object.assign(t.headers, { "X-Surge-Skip-Scripting": !1 })), $httpClient.post(t, (t, s, i) => { !t && s && (s.body = i, s.statusCode = s.status), e(t, s, i) }); else if (this.isQuanX()) t.method = "POST", this.isNeedRewrite && (t.opts = t.opts || {}, Object.assign(t.opts, { hints: !1 })), $task.fetch(t).then(t => { const { statusCode: s, statusCode: i, headers: r, body: o } = t; e(null, { status: s, statusCode: i, headers: r, body: o }, o) }, t => e(t)); else if (this.isNode()) { this.initGotEnv(t); const { url: s, ...i } = t; this.got.post(s, i).then(t => { const { statusCode: s, statusCode: i, headers: r, body: o } = t; e(null, { status: s, statusCode: i, headers: r, body: o }, o) }, t => { const { message: s, response: i } = t; e(s, i, i && i.body) }) } } time(t, e = null) { const s = e ? new Date(e) : new Date; let i = { "M+": s.getMonth() + 1, "d+": s.getDate(), "H+": s.getHours(), "m+": s.getMinutes(), "s+": s.getSeconds(), "q+": Math.floor((s.getMonth() + 3) / 3), S: s.getMilliseconds() }; /(y+)/.test(t) && (t = t.replace(RegExp.$1, (String(s.getFullYear())).substr(4 - RegExp.$1.length))); for (let e in i) new RegExp("(" + e + ")").test(t) && (t = t.replace(RegExp.$1, RegExp.$1.length == 1 ? i[e] : ("00" + i[e]).substr((String(i[e])).length))); return t } msg(e = t, s = "", i = "", r) { const o = t => { if (!t) return t; if (typeof t === "string") return this.isLoon() ? t : this.isQuanX() ? { "open-url": t } : this.isSurge() ? { url: t } : void 0; if (typeof t === "object") { if (this.isLoon()) { let e = t.openUrl || t.url || t["open-url"],  s = t.mediaUrl || t["media-url"]; return { openUrl: e, mediaUrl: s } } if (this.isQuanX()) { let e = t["open-url"] || t.url || t.openUrl,  s = t["media-url"] || t.mediaUrl; return { "open-url": e, "media-url": s } } if (this.isSurge()) { let e = t.url || t.openUrl || t["open-url"]; return { url: e } } } }; if (this.isMute || (this.isSurge() || this.isLoon() ? $notification.post(e, s, i, o(r)) : this.isQuanX() && $notify(e, s, i, o(r))), !this.isMuteLog) { let t = ["", "==============📣系统通知📣=============="]; t.push(e), s && t.push(s), i && t.push(i), console.log(t.join("\n")), this.logs = this.logs.concat(t) } } log(...t) { t.length > 0 && (this.logs = [...this.logs, ...t]), console.log(t.join(this.logSeparator)) } logErr(t, e) { const s = !this.isSurge() && !this.isQuanX() && !this.isLoon(); s ? this.log("", `❗️${this.name}, 错误!`, t.stack) : this.log("", `❗️${this.name}, 错误!`, t) } wait(t) { return new Promise(e => setTimeout(e, t)) } done(t = {}) { const e = (new Date).getTime(),  s = (e - this.startTime) / 1e3; this.log("", `🔔${this.name}, 结束! 🕛 ${s} 秒`), this.log(), (this.isSurge() || this.isQuanX() || this.isLoon()) && $done(t) } }(t, e) }
+function Env(t, e) { "undefined" !== typeof process && JSON.stringify(process.env).indexOf("GITHUB") > -1 && process.exit(0); class s { constructor(t) { this.env = t } send(t, e = "GET") { t = typeof t === "string" ? { url: t } : t; let s = this.get; return e === "POST" && (s = this.post), new Promise((e, i) => { s.call(this, t, (t, s, r) => { t ? i(t) : e(s) }) }) } get(t) { return this.send.call(this.env, t) } post(t) { return this.send.call(this.env, t, "POST") } } return new class { constructor(t, e) { this.name = t, this.http = new s(this), this.data = null, this.dataFile = "box.dat", this.logs = [], this.isMute = !1, this.isNeedRewrite = !1, this.logSeparator = "\n", this.startTime = (new Date).getTime(), Object.assign(this, e), this.log("", `🔔${this.name}, 开始!`) } isNode() { return "undefined" !== typeof module && !!module.exports } isQuanX() { return "undefined" !== typeof $task } isSurge() { return "undefined" !== typeof $httpClient && typeof $loon === "undefined" } isLoon() { return "undefined" !== typeof $loon } toObj(t, e = null) { try { return JSON.parse(t) } catch { return e } } toStr(t, e = null) { try { return JSON.stringify(t) } catch { return e } } getjson(t, e) { let s = e; const i = this.getdata(t); if (i) try { s = JSON.parse(this.getdata(t)) } catch { } return s } setjson(t, e) { try { return this.setdata(JSON.stringify(t), e) } catch { return !1 } } getScript(t) { return new Promise(e => { this.get({ url: t }, (t, s, i) => e(i)) }) } runScript(t, e) { return new Promise(s => { let i = this.getdata("@chavy_boxjs_userCfgs.httpapi"); i = i ? i.replace(/\n/g, "").trim() : i; let r = this.getdata("@chavy_boxjs_userCfgs.httpapi_timeout"); r = r ? Number(r) : 20, r = e && e.timeout ? e.timeout : r; const [o, h] = i.split("@"); const  n = { url: `http://${h}/v1/scripting/evaluate`, body: { script_text: t, mock_type: "cron", timeout: r }, headers: { "X-Key": o, Accept: "*/*" } }; this.post(n, (t, e, i) => s(i)) }).catch(t => this.logErr(t)) } loaddata() { if (!this.isNode()) return {}; { this.fs = this.fs ? this.fs : require("fs"), this.path = this.path ? this.path : require("path"); const t = this.path.resolve(this.dataFile); const  e = this.path.resolve(process.cwd(), this.dataFile); const  s = this.fs.existsSync(t); const  i = !s && this.fs.existsSync(e); if (!s && !i) return {}; { const i = s ? t : e; try { return JSON.parse(this.fs.readFileSync(i)) } catch (t) { return {} } } } } writedata() { if (this.isNode()) { this.fs = this.fs ? this.fs : require("fs"), this.path = this.path ? this.path : require("path"); const t = this.path.resolve(this.dataFile); const  e = this.path.resolve(process.cwd(), this.dataFile); const  s = this.fs.existsSync(t); const  i = !s && this.fs.existsSync(e); const  r = JSON.stringify(this.data); s ? this.fs.writeFileSync(t, r) : i ? this.fs.writeFileSync(e, r) : this.fs.writeFileSync(t, r) } } lodash_get(t, e, s) { const i = e.replace(/\[(\d+)\]/g, ".$1").split("."); let r = t; for (const t of i) if (r = Object(r)[t], void 0 === r) return s; return r } lodash_set(t, e, s) { return Object(t) !== t ? t : (Array.isArray(e) || (e = e.toString().match(/[^.[\]]+/g) || []), e.slice(0, -1).reduce((t, s, i) => Object(t[s]) === t[s] ? t[s] : t[s] = Math.abs(e[i + 1]) >> 0 == Number(e[i + 1]) ? [] : {}, t)[e[e.length - 1]] = s, t) } getdata(t) { let e = this.getval(t); if (/^@/.test(t)) { const [, s, i] = /^@(.*?)\.(.*?)$/.exec(t); const  r = s ? this.getval(s) : ""; if (r) try { const t = JSON.parse(r); e = t ? this.lodash_get(t, i, "") : e } catch (t) { e = "" } } return e } setdata(t, e) { let s = !1; if (/^@/.test(e)) { const [, i, r] = /^@(.*?)\.(.*?)$/.exec(e); const  o = this.getval(i); const  h = i ? o === "null" ? null : o || "{}" : "{}"; try { const e = JSON.parse(h); this.lodash_set(e, r, t), s = this.setval(JSON.stringify(e), i) } catch (e) { const o = {}; this.lodash_set(o, r, t), s = this.setval(JSON.stringify(o), i) } } else s = this.setval(t, e); return s } getval(t) { return this.isSurge() || this.isLoon() ? $persistentStore.read(t) : this.isQuanX() ? $prefs.valueForKey(t) : this.isNode() ? (this.data = this.loaddata(), this.data[t]) : this.data && this.data[t] || null } setval(t, e) { return this.isSurge() || this.isLoon() ? $persistentStore.write(t, e) : this.isQuanX() ? $prefs.setValueForKey(t, e) : this.isNode() ? (this.data = this.loaddata(), this.data[e] = t, this.writedata(), !0) : this.data && this.data[e] || null } initGotEnv(t) { this.got = this.got ? this.got : require("got"), this.cktough = this.cktough ? this.cktough : require("tough-cookie"), this.ckjar = this.ckjar ? this.ckjar : new this.cktough.CookieJar, t && (t.headers = t.headers ? t.headers : {}, void 0 === t.headers.Cookie && void 0 === t.cookieJar && (t.cookieJar = this.ckjar)) } get(t, e = (() => { })) { t.headers && (delete t.headers["Content-Type"], delete t.headers["Content-Length"]), this.isSurge() || this.isLoon() ? (this.isSurge() && this.isNeedRewrite && (t.headers = t.headers || {}, Object.assign(t.headers, { "X-Surge-Skip-Scripting": !1 })), $httpClient.get(t, (t, s, i) => { !t && s && (s.body = i, s.statusCode = s.status), e(t, s, i) })) : this.isQuanX() ? (this.isNeedRewrite && (t.opts = t.opts || {}, Object.assign(t.opts, { hints: !1 })), $task.fetch(t).then(t => { const { statusCode: s, statusCode: i, headers: r, body: o } = t; e(null, { status: s, statusCode: i, headers: r, body: o }, o) }, t => e(t))) : this.isNode() && (this.initGotEnv(t), this.got(t).on("redirect", (t, e) => { try { if (t.headers["set-cookie"]) { const s = t.headers["set-cookie"].map(this.cktough.Cookie.parse).toString(); s && this.ckjar.setCookieSync(s, null), e.cookieJar = this.ckjar } } catch (t) { this.logErr(t) } }).then(t => { const { statusCode: s, statusCode: i, headers: r, body: o } = t; e(null, { status: s, statusCode: i, headers: r, body: o }, o) }, t => { const { message: s, response: i } = t; e(s, i, i && i.body) })) } post(t, e = (() => { })) { if (t.body && t.headers && !t.headers["Content-Type"] && (t.headers["Content-Type"] = "application/x-www-form-urlencoded"), t.headers && delete t.headers["Content-Length"], this.isSurge() || this.isLoon()) this.isSurge() && this.isNeedRewrite && (t.headers = t.headers || {}, Object.assign(t.headers, { "X-Surge-Skip-Scripting": !1 })), $httpClient.post(t, (t, s, i) => { !t && s && (s.body = i, s.statusCode = s.status), e(t, s, i) }); else if (this.isQuanX()) t.method = "POST", this.isNeedRewrite && (t.opts = t.opts || {}, Object.assign(t.opts, { hints: !1 })), $task.fetch(t).then(t => { const { statusCode: s, statusCode: i, headers: r, body: o } = t; e(null, { status: s, statusCode: i, headers: r, body: o }, o) }, t => e(t)); else if (this.isNode()) { this.initGotEnv(t); const { url: s, ...i } = t; this.got.post(s, i).then(t => { const { statusCode: s, statusCode: i, headers: r, body: o } = t; e(null, { status: s, statusCode: i, headers: r, body: o }, o) }, t => { const { message: s, response: i } = t; e(s, i, i && i.body) }) } } time(t, e = null) { const s = e ? new Date(e) : new Date; let i = { "M+": s.getMonth() + 1, "d+": s.getDate(), "H+": s.getHours(), "m+": s.getMinutes(), "s+": s.getSeconds(), "q+": Math.floor((s.getMonth() + 3) / 3), S: s.getMilliseconds() }; /(y+)/.test(t) && (t = t.replace(RegExp.$1, (String(s.getFullYear())).substr(4 - RegExp.$1.length))); for (let e in i) new RegExp("(" + e + ")").test(t) && (t = t.replace(RegExp.$1, RegExp.$1.length == 1 ? i[e] : ("00" + i[e]).substr((String(i[e])).length))); return t } msg(e = t, s = "", i = "", r) { const o = t => { if (!t) return t; if (typeof t === "string") return this.isLoon() ? t : this.isQuanX() ? { "open-url": t } : this.isSurge() ? { url: t } : void 0; if (typeof t === "object") { if (this.isLoon()) { let e = t.openUrl || t.url || t["open-url"]; let  s = t.mediaUrl || t["media-url"]; return { openUrl: e, mediaUrl: s } } if (this.isQuanX()) { let e = t["open-url"] || t.url || t.openUrl; let  s = t["media-url"] || t.mediaUrl; return { "open-url": e, "media-url": s } } if (this.isSurge()) { let e = t.url || t.openUrl || t["open-url"]; return { url: e } } } }; if (this.isMute || (this.isSurge() || this.isLoon() ? $notification.post(e, s, i, o(r)) : this.isQuanX() && $notify(e, s, i, o(r))), !this.isMuteLog) { let t = ["", "==============📣系统通知📣=============="]; t.push(e), s && t.push(s), i && t.push(i), console.log(t.join("\n")), this.logs = this.logs.concat(t) } } log(...t) { t.length > 0 && (this.logs = [...this.logs, ...t]), console.log(t.join(this.logSeparator)) } logErr(t, e) { const s = !this.isSurge() && !this.isQuanX() && !this.isLoon(); s ? this.log("", `❗️${this.name}, 错误!`, t.stack) : this.log("", `❗️${this.name}, 错误!`, t) } wait(t) { return new Promise(e => setTimeout(e, t)) } done(t = {}) { const e = (new Date).getTime(); const  s = (e - this.startTime) / 1e3; this.log("", `🔔${this.name}, 结束! 🕛 ${s} 秒`), this.log(), (this.isSurge() || this.isQuanX() || this.isLoon()) && $done(t) } }(t, e) }

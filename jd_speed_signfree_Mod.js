@@ -1,16 +1,16 @@
 /*
  cron: 18 9 * * * 
 */
-const $ = new Env('京东极速签到免单'),
-  notify = $.isNode() ? require('./sendNotify') : '',
-  // Node.js用户请在jdCookie.js处填写京东ck;
-  jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
+const $ = new Env('京东极速签到免单');
+const notify = $.isNode() ? require('./sendNotify') : '';
+// Node.js用户请在jdCookie.js处填写京东ck;
+const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 // IOS等用户直接用NobyDa的jd cookie
-let cookiesArr = [],
-  cookie = '',
-  WP_APP_TOKEN_ONE = '',
-  strmessagebyone = '',
-  strmessage = '';
+let cookiesArr = [];
+let cookie = '';
+let WP_APP_TOKEN_ONE = '';
+let strmessagebyone = '';
+let strmessage = '';
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item]);

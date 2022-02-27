@@ -1,5 +1,3 @@
-'use strict';
-
 const got = require('got');
 require('dotenv').config();
 const { readFile } = require('fs/promises');
@@ -45,11 +43,13 @@ module.exports.addEnv = async (cookie, remarks) => {
     method: 'post',
     url: 'api/envs',
     params: { t: Date.now() },
-    json: [{
-      name: 'JD_COOKIE',
-      value: cookie,
-      remarks,
-    }],
+    json: [
+      {
+        name: 'JD_COOKIE',
+        value: cookie,
+        remarks,
+      },
+    ],
     headers: {
       Accept: 'application/json',
       authorization: `Bearer ${token}`,
@@ -106,7 +106,7 @@ module.exports.DisableCk = async (eid) => {
   const body = await api({
     method: 'put',
     url: 'api/envs/disable',
-    params: { t: Date.now() },	
+    params: { t: Date.now() },
     body: JSON.stringify([eid]),
     headers: {
       Accept: 'application/json',
@@ -122,7 +122,7 @@ module.exports.EnableCk = async (eid) => {
   const body = await api({
     method: 'put',
     url: 'api/envs/enable',
-    params: { t: Date.now() },	
+    params: { t: Date.now() },
     body: JSON.stringify([eid]),
     headers: {
       Accept: 'application/json',
@@ -133,51 +133,51 @@ module.exports.EnableCk = async (eid) => {
   return body;
 };
 
-module.exports.getstatus = async(eid) => {
-    const envs = await this.getEnvs();
-    var tempid = 0;
-    for (let i = 0; i < envs.length; i++) {
-		tempid = 0;
-        if (envs[i]._id) {
-            tempid = envs[i]._id;
-        }
-        if (envs[i].id) {
-            tempid = envs[i].id;
-        }
-        if (tempid == eid) {
-            return envs[i].status;
-        }
+module.exports.getstatus = async (eid) => {
+  const envs = await this.getEnvs();
+  let tempid = 0;
+  for (let i = 0; i < envs.length; i++) {
+    tempid = 0;
+    if (envs[i]._id) {
+      tempid = envs[i]._id;
     }
-    return 99;
+    if (envs[i].id) {
+      tempid = envs[i].id;
+    }
+    if (tempid == eid) {
+      return envs[i].status;
+    }
+  }
+  return 99;
 };
 
-module.exports.getEnvById = async(eid) => {
-    const envs = await this.getEnvs();
-    var tempid = 0;
-    for (let i = 0; i < envs.length; i++) {
-        tempid = 0;
-        if (envs[i]._id) {
-            tempid = envs[i]._id;
-        }
-        if (envs[i].id) {
-            tempid = envs[i].id;
-        }
-        if (tempid == eid) {
-            return envs[i].value;
-        }
+module.exports.getEnvById = async (eid) => {
+  const envs = await this.getEnvs();
+  let tempid = 0;
+  for (let i = 0; i < envs.length; i++) {
+    tempid = 0;
+    if (envs[i]._id) {
+      tempid = envs[i]._id;
     }
-    return "";
+    if (envs[i].id) {
+      tempid = envs[i].id;
+    }
+    if (tempid == eid) {
+      return envs[i].value;
+    }
+  }
+  return '';
 };
 
 module.exports.getEnvByPtPin = async (Ptpin) => {
   const envs = await this.getEnvs();
-  for (let i = 0; i < envs.length; i++) {	
-	var tempptpin = decodeURIComponent(envs[i].value.match(/pt_pin=([^; ]+)(?=;?)/) && envs[i].value.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
-	if(tempptpin==Ptpin){		 
-		 return envs[i]; 
-	  }
-  }  
-  return "";
+  for (let i = 0; i < envs.length; i++) {
+    let tempptpin = decodeURIComponent(envs[i].value.match(/pt_pin=([^; ]+)(?=;?)/) && envs[i].value.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
+    if (tempptpin == Ptpin) {
+      return envs[i];
+    }
+  }
+  return '';
 };
 
 module.exports.delEnv = async (eid) => {

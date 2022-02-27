@@ -1,14 +1,14 @@
 /*
 cron:13 0,6,22 * * * 
  */
-const $ = new Env('东东健康社区互助版'),
-  jdCookieNode = $.isNode() ? require('./jdCookie.js') : '',
-  notify = $.isNode() ? require('./sendNotify') : '';
-let cookiesArr = [],
-  cookie = '',
-  allMessage = '',
-  message,
-  reward = process.env.JD_HEALTH_REWARD_NAME ? process.env.JD_HEALTH_REWARD_NAME : '';
+const $ = new Env('东东健康社区互助版');
+const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
+const notify = $.isNode() ? require('./sendNotify') : '';
+let cookiesArr = [];
+let cookie = '';
+let allMessage = '';
+let message;
+let reward = process.env.JD_HEALTH_REWARD_NAME ? process.env.JD_HEALTH_REWARD_NAME : '';
 const randomCount = $.isNode() ? 20 : 5;
 $.newShareCodes = [];
 let UserShareCodes = '';
@@ -34,8 +34,8 @@ if ($.isNode()) {
 }
 const JD_API_HOST = 'https://api.m.jd.com/';
 
-let NowHour = new Date().getHours(),
-  llhelp = true;
+let NowHour = new Date().getHours();
+let llhelp = true;
 if ($.isNode() && process.env.CC_NOHELPAFTER8) {
   console.log(NowHour);
   if (process.env.CC_NOHELPAFTER8 == 'true') {

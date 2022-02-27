@@ -2,22 +2,22 @@
 cron:15 6-18/6 * * * 
 */
 const $ = new Env('东东萌宠互助版');
-let cookiesArr = [],
-  cookie = '',
-  jdPetShareArr = [],
-  isBox = false,
-  allMessage = '',
-  message = '',
-  subTitle = '',
-  option = {},
-  jdNotify = false; // 是否关闭通知，false打开通知推送，true关闭通知推送
-const JD_API_HOST = 'https://api.m.jd.com/client.action',
-  notify = $.isNode() ? require('./sendNotify') : '',
-  jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-let goodsUrl = '',
-  taskInfoKey = [],
-  newShareCodes = [],
-  NoNeedCodes = [];
+let cookiesArr = [];
+let cookie = '';
+let jdPetShareArr = [];
+let isBox = false;
+let allMessage = '';
+let message = '';
+let subTitle = '';
+let option = {};
+let jdNotify = false; // 是否关闭通知，false打开通知推送，true关闭通知推送
+const JD_API_HOST = 'https://api.m.jd.com/client.action';
+const notify = $.isNode() ? require('./sendNotify') : '';
+const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
+let goodsUrl = '';
+let taskInfoKey = [];
+let newShareCodes = [];
+let NoNeedCodes = [];
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     if (jdCookieNode[item]) {
@@ -29,8 +29,8 @@ if ($.isNode()) {
   cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || '[]').map((item) => item.cookie)].filter((item) => !!item);
 }
 
-let NowHour = new Date().getHours(),
-  llhelp = true;
+let NowHour = new Date().getHours();
+let llhelp = true;
 if ($.isNode() && process.env.CC_NOHELPAFTER8) {
   console.log(NowHour);
   if (process.env.CC_NOHELPAFTER8 == 'true') {
@@ -455,16 +455,16 @@ async function threeMealInitFun() {
 async function browseSingleShopInit(item) {
   console.log(`开始做 ${item.title} 任务， ${item.desc}`);
   const body = {
-      index: item['index'],
-      version: 1,
-      type: 1,
-    },
-    body2 = {
-      index: item['index'],
-      version: 1,
-      type: 2,
-    },
-    response = await request('getSingleShopReward', body);
+    index: item['index'],
+    version: 1,
+    type: 1,
+  };
+  const body2 = {
+    index: item['index'],
+    version: 1,
+    type: 2,
+  };
+  const response = await request('getSingleShopReward', body);
   // console.log(`点击进去response::${JSON.stringify(response)}`);
   if (response.code === '0' && response.resultCode === '0') {
     const response2 = await request('getSingleShopReward', body2);
@@ -479,9 +479,9 @@ async function browseSingleShopInit(item) {
 // 浏览店铺任务, 任务可能为多个? 目前只有一个
 async function browseShopsInitFun() {
   console.log('开始浏览店铺任务');
-  let times = 0,
-    resultCode = 0,
-    code = 0;
+  let times = 0;
+  let resultCode = 0;
+  let code = 0;
   do {
     let response = await request('getBrowseShopsReward');
     console.log(`第${times}次浏览店铺结果: ${JSON.stringify(response)}`);
@@ -514,9 +514,9 @@ async function inviteFriendsInitFun() {
  */
 async function feedReachInitFun() {
   console.log('投食任务开始...');
-  let finishedTimes = $.taskInfo.feedReachInit.hadFeedAmount / 10, // 已经喂养了几次
-    needFeedTimes = 10 - finishedTimes, // 还需要几次
-    tryTimes = 20; // 尝试次数
+  let finishedTimes = $.taskInfo.feedReachInit.hadFeedAmount / 10; // 已经喂养了几次
+  let needFeedTimes = 10 - finishedTimes; // 还需要几次
+  let tryTimes = 20; // 尝试次数
   do {
     console.log(`还需要投食${needFeedTimes}次`);
     const response = await request('feedPets');

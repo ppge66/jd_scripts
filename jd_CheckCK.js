@@ -2,12 +2,12 @@
 cron "59 * * * *" jd_CheckCK.js, tag:京东CK检测by-ccwav
  */
 // 详细说明参考 https://github.com/ccwav/QLScript2.
-const $ = new Env('京东CK检测'),
-  notify = $.isNode() ? require('./sendNotify') : '',
-  // Node.js用户请在jdCookie.js处填写京东ck;
-  jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-const got = require('got'),
-  { getEnvs, getEnvById, DisableCk, EnableCk, getstatus } = require('./ql');
+const $ = new Env('京东CK检测');
+const notify = $.isNode() ? require('./sendNotify') : '';
+// Node.js用户请在jdCookie.js处填写京东ck;
+const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
+const got = require('got');
+const { getEnvs, getEnvById, DisableCk, EnableCk, getstatus } = require('./ql');
 const api = got.extend({
   retry: {
     limit: 0,
@@ -15,56 +15,56 @@ const api = got.extend({
   responseType: 'json',
 });
 
-let ShowSuccess = 'false',
-  CKAlwaysNotify = 'false',
-  CKAutoEnable = 'true',
-  NoWarnError = 'false',
-  MessageUserGp2 = '',
-  MessageUserGp3 = '',
-  MessageUserGp4 = '',
-  MessageGp2 = '',
-  MessageGp3 = '',
-  MessageGp4 = '',
-  MessageAll = '',
-  userIndex2 = -1,
-  userIndex3 = -1,
-  userIndex4 = -1,
-  IndexGp2 = 0,
-  IndexGp3 = 0,
-  IndexGp4 = 0,
-  IndexAll = 0,
-  TempErrorMessage = '',
-  TempSuccessMessage = '',
-  TempDisableMessage = '',
-  TempEnableMessage = '',
-  TempOErrorMessage = '',
-  allMessage = '',
-  ErrorMessage = '',
-  SuccessMessage = '',
-  DisableMessage = '',
-  EnableMessage = '',
-  OErrorMessage = '',
-  allMessageGp2 = '',
-  ErrorMessageGp2 = '',
-  SuccessMessageGp2 = '',
-  DisableMessageGp2 = '',
-  EnableMessageGp2 = '',
-  OErrorMessageGp2 = '',
-  allMessageGp3 = '',
-  ErrorMessageGp3 = '',
-  SuccessMessageGp3 = '',
-  DisableMessageGp3 = '',
-  EnableMessageGp3 = '',
-  OErrorMessageGp3 = '',
-  allMessageGp4 = '',
-  ErrorMessageGp4 = '',
-  SuccessMessageGp4 = '',
-  DisableMessageGp4 = '',
-  EnableMessageGp4 = '',
-  OErrorMessageGp4 = '',
-  strAllNotify = '',
-  strNotifyOneTemp = '',
-  WP_APP_TOKEN_ONE = '';
+let ShowSuccess = 'false';
+let CKAlwaysNotify = 'false';
+let CKAutoEnable = 'true';
+let NoWarnError = 'false';
+let MessageUserGp2 = '';
+let MessageUserGp3 = '';
+let MessageUserGp4 = '';
+let MessageGp2 = '';
+let MessageGp3 = '';
+let MessageGp4 = '';
+let MessageAll = '';
+let userIndex2 = -1;
+let userIndex3 = -1;
+let userIndex4 = -1;
+let IndexGp2 = 0;
+let IndexGp3 = 0;
+let IndexGp4 = 0;
+let IndexAll = 0;
+let TempErrorMessage = '';
+let TempSuccessMessage = '';
+let TempDisableMessage = '';
+let TempEnableMessage = '';
+let TempOErrorMessage = '';
+let allMessage = '';
+let ErrorMessage = '';
+let SuccessMessage = '';
+let DisableMessage = '';
+let EnableMessage = '';
+let OErrorMessage = '';
+let allMessageGp2 = '';
+let ErrorMessageGp2 = '';
+let SuccessMessageGp2 = '';
+let DisableMessageGp2 = '';
+let EnableMessageGp2 = '';
+let OErrorMessageGp2 = '';
+let allMessageGp3 = '';
+let ErrorMessageGp3 = '';
+let SuccessMessageGp3 = '';
+let DisableMessageGp3 = '';
+let EnableMessageGp3 = '';
+let OErrorMessageGp3 = '';
+let allMessageGp4 = '';
+let ErrorMessageGp4 = '';
+let SuccessMessageGp4 = '';
+let DisableMessageGp4 = '';
+let EnableMessageGp4 = '';
+let OErrorMessageGp4 = '';
+let strAllNotify = '';
+let strNotifyOneTemp = '';
+let WP_APP_TOKEN_ONE = '';
 if ($.isNode() && process.env.WP_APP_TOKEN_ONE) {
   WP_APP_TOKEN_ONE = process.env.WP_APP_TOKEN_ONE;
 }

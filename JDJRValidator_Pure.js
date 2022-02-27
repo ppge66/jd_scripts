@@ -5,20 +5,21 @@ const zlib = require('zlib');
 const vm = require('vm');
 const PNG = require('png-js');
 let UA = `jdapp;iPhone;10.1.0;14.3;${randomString(40)};network/wifi;model/iPhone12,1;addressid/4199175193;appBuild/167774;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1`;
-const validatorCount = process.env.JDJR_validator_Count ? process.env.JDJR_validator_Count : 100
+const validatorCount = process.env.JDJR_validator_Count ? process.env.JDJR_validator_Count : 100;
 
 function randomString(e) {
   e = e || 32;
-  let t = "abcdef0123456789", a = t.length, n = "";
-  for (i = 0; i < e; i++)
-    n += t.charAt(Math.floor(Math.random() * a));
-  return n
+  let t = 'abcdef0123456789';
+  let a = t.length;
+  let n = '';
+  for (i = 0; i < e; i++) n += t.charAt(Math.floor(Math.random() * a));
+  return n;
 }
 
 Math.avg = function average() {
-  var sum = 0;
-  var len = this.length;
-  for (var i = 0; i < len; i++) {
+  let sum = 0;
+  let len = this.length;
+  for (let i = 0; i < len; i++) {
     sum += this[i];
   }
   return sum / len;
@@ -44,11 +45,11 @@ class PNGDecoder extends PNG {
   }
 
   getImageData(x, y, w, h) {
-    const {pixels} = this;
+    const { pixels } = this;
     const len = w * h * 4;
     const startIndex = x * 4 + y * (w * 4);
 
-    return {data: pixels.slice(startIndex, startIndex + len)};
+    return { data: pixels.slice(startIndex, startIndex + len) };
   }
 }
 
@@ -80,23 +81,23 @@ class PuzzleRecognizer {
   }
 
   recognize() {
-    const {ctx, w: width, bg} = this;
-    const {width: patchWidth, height: patchHeight} = this.patch;
-    const posY = this.y + PUZZLE_PAD + ((patchHeight - PUZZLE_PAD) / 2) - (PUZZLE_GAP / 2);
+    const { ctx, w: width, bg } = this;
+    const { width: patchWidth, height: patchHeight } = this.patch;
+    const posY = this.y + PUZZLE_PAD + (patchHeight - PUZZLE_PAD) / 2 - PUZZLE_GAP / 2;
     // const cData = ctx.getImageData(0, a.y + 10 + 20 - 4, 360, 8).data;
     const cData = bg.getImageData(0, posY, width, PUZZLE_GAP).data;
     const lumas = [];
 
     for (let x = 0; x < width; x++) {
-      var sum = 0;
+      let sum = 0;
 
       // y xais
       for (let y = 0; y < PUZZLE_GAP; y++) {
-        var idx = x * 4 + y * (width * 4);
-        var r = cData[idx];
-        var g = cData[idx + 1];
-        var b = cData[idx + 2];
-        var luma = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+        let idx = x * 4 + y * (width * 4);
+        let r = cData[idx];
+        let g = cData[idx + 1];
+        let b = cData[idx + 2];
+        let luma = 0.2126 * r + 0.7152 * g + 0.0722 * b;
 
         sum += luma;
       }
@@ -135,7 +136,7 @@ class PuzzleRecognizer {
   }
 
   runWithCanvas() {
-    const {createCanvas, Image} = require('canvas');
+    const { createCanvas, Image } = require('canvas');
     const canvas = createCanvas();
     const ctx = canvas.getContext('2d');
     const imgBg = new Image();
@@ -144,29 +145,29 @@ class PuzzleRecognizer {
 
     imgBg.src = prefix + this.rawBg;
     imgPatch.src = prefix + this.rawPatch;
-    const {naturalWidth: w, naturalHeight: h} = imgBg;
+    const { naturalWidth: w, naturalHeight: h } = imgBg;
     canvas.width = w;
     canvas.height = h;
     ctx.clearRect(0, 0, w, h);
     ctx.drawImage(imgBg, 0, 0, w, h);
 
     const width = w;
-    const {naturalWidth, naturalHeight} = imgPatch;
-    const posY = this.y + PUZZLE_PAD + ((naturalHeight - PUZZLE_PAD) / 2) - (PUZZLE_GAP / 2);
+    const { naturalWidth, naturalHeight } = imgPatch;
+    const posY = this.y + PUZZLE_PAD + (naturalHeight - PUZZLE_PAD) / 2 - PUZZLE_GAP / 2;
     // const cData = ctx.getImageData(0, a.y + 10 + 20 - 4, 360, 8).data;
     const cData = ctx.getImageData(0, posY, width, PUZZLE_GAP).data;
     const lumas = [];
 
     for (let x = 0; x < width; x++) {
-      var sum = 0;
+      let sum = 0;
 
       // y xais
       for (let y = 0; y < PUZZLE_GAP; y++) {
-        var idx = x * 4 + y * (width * 4);
-        var r = cData[idx];
-        var g = cData[idx + 1];
-        var b = cData[idx + 2];
-        var luma = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+        let idx = x * 4 + y * (width * 4);
+        let r = cData[idx];
+        let g = cData[idx + 1];
+        let b = cData[idx + 2];
+        let luma = 0.2126 * r + 0.7152 * g + 0.0722 * b;
 
         sum += luma;
       }
@@ -206,9 +207,9 @@ class PuzzleRecognizer {
 }
 
 const DATA = {
-  "appId": "17839d5db83",
-  "product": "embed",
-  "lang": "zh_CN",
+  appId: '17839d5db83',
+  product: 'embed',
+  lang: 'zh_CN',
 };
 const SERVER = 'iv.jd.com';
 
@@ -220,7 +221,7 @@ class JDJRValidator {
     this.count = 0;
   }
 
-  async run(scene = 'cww', eid='') {
+  async run(scene = 'cww', eid = '') {
     const tryRecognize = async () => {
       const x = await this.recognize(scene, eid);
 
@@ -239,7 +240,7 @@ class JDJRValidator {
     // await sleep(4500);
     await sleep(pos[pos.length - 1][2] - Date.now());
     this.count++;
-    const result = await JDJRValidator.jsonp('/slide/s.html', {d, ...this.data}, scene);
+    const result = await JDJRValidator.jsonp('/slide/s.html', { d, ...this.data }, scene);
 
     if (result.message === 'success') {
       // console.log(result);
@@ -248,10 +249,10 @@ class JDJRValidator {
     } else {
       console.log(`验证失败: ${this.count}/${validatorCount}`);
       // console.log(JSON.stringify(result));
-      if(this.count >= validatorCount){
-        console.log("JDJR验证次数已达上限，退出验证");
+      if (this.count >= validatorCount) {
+        console.log('JDJR验证次数已达上限，退出验证');
         return result;
-      }else{
+      } else {
         await sleep(300);
         return await this.run(scene, eid);
       }
@@ -259,8 +260,8 @@ class JDJRValidator {
   }
 
   async recognize(scene, eid) {
-    const data = await JDJRValidator.jsonp('/slide/g.html', {e: eid}, scene);
-    const {bg, patch, y} = data;
+    const data = await JDJRValidator.jsonp('/slide/g.html', { e: eid }, scene);
+    const { bg, patch, y } = data;
     // const uri = 'data:image/png;base64,';
     // const re = new PuzzleRecognizer(uri+bg, uri+patch, y);
     const re = new PuzzleRecognizer(bg, patch, y);
@@ -293,49 +294,44 @@ class JDJRValidator {
       }
     }
 
-    console.log('验证成功: %f\%', (count / n) * 100);
-    console.clear()
+    console.log('验证成功: %f%', (count / n) * 100);
+    console.clear();
     console.timeEnd('PuzzleRecognizer');
   }
 
   static jsonp(api, data = {}, scene) {
     return new Promise((resolve, reject) => {
       const fnId = `jsonp_${String(Math.random()).replace('.', '')}`;
-      const extraData = {callback: fnId};
-      const query = new URLSearchParams({...DATA,...{"scene": scene}, ...extraData, ...data}).toString();
+      const extraData = { callback: fnId };
+      const query = new URLSearchParams({ ...DATA, ...{ scene: scene }, ...extraData, ...data }).toString();
       const url = `https://${SERVER}${api}?${query}`;
       const headers = {
-        'Accept': '*/*',
+        Accept: '*/*',
         'Accept-Encoding': 'gzip,deflate,br',
         'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
-        'Connection': 'keep-alive',
-        'Host': "iv.jd.com",
+        Connection: 'keep-alive',
+        Host: 'iv.jd.com',
         'Proxy-Connection': 'keep-alive',
-        'Referer': 'https://h5.m.jd.com/',
+        Referer: 'https://h5.m.jd.com/',
         'User-Agent': UA,
       };
 
-      const req = https.get(url, {headers}, (response) => {
+      const req = https.get(url, { headers }, (response) => {
         let res = response;
         if (res.headers['content-encoding'] === 'gzip') {
           const unzipStream = new stream.PassThrough();
-          stream.pipeline(
-            response,
-            zlib.createGunzip(),
-            unzipStream,
-            reject,
-          );
+          stream.pipeline(response, zlib.createGunzip(), unzipStream, reject);
           res = unzipStream;
         }
         res.setEncoding('utf8');
 
         let rawData = '';
 
-        res.on('data', (chunk) => rawData += chunk);
+        res.on('data', (chunk) => (rawData += chunk));
         res.on('end', () => {
           try {
             const ctx = {
-              [fnId]: (data) => ctx.data = data,
+              [fnId]: (data) => (ctx.data = data),
               data: {},
             };
 
@@ -359,48 +355,48 @@ class JDJRValidator {
 
 function getCoordinate(c) {
   function string10to64(d) {
-    var c = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-~".split("")
-      , b = c.length
-      , e = +d
-      , a = [];
+    let c = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-~'.split('');
+    let b = c.length;
+    let e = Number(d);
+    let a = [];
     do {
       mod = e % b;
       e = (e - mod) / b;
-      a.unshift(c[mod])
+      a.unshift(c[mod]);
     } while (e);
-    return a.join("")
+    return a.join('');
   }
 
   function prefixInteger(a, b) {
-    return (Array(b).join(0) + a).slice(-b)
+    return (Array(b).join(0) + a).slice(-b);
   }
 
   function pretreatment(d, c, b) {
-    var e = string10to64(Math.abs(d));
-    var a = "";
+    let e = string10to64(Math.abs(d));
+    let a = '';
     if (!b) {
-      a += (d > 0 ? "1" : "0")
+      a += d > 0 ? '1' : '0';
     }
     a += prefixInteger(e, c);
-    return a
+    return a;
   }
 
-  var b = new Array();
-  for (var e = 0; e < c.length; e++) {
+  let b = new Array();
+  for (let e = 0; e < c.length; e++) {
     if (e == 0) {
       b.push(pretreatment(c[e][0] < 262143 ? c[e][0] : 262143, 3, true));
       b.push(pretreatment(c[e][1] < 16777215 ? c[e][1] : 16777215, 4, true));
-      b.push(pretreatment(c[e][2] < 4398046511103 ? c[e][2] : 4398046511103, 7, true))
+      b.push(pretreatment(c[e][2] < 4398046511103 ? c[e][2] : 4398046511103, 7, true));
     } else {
-      var a = c[e][0] - c[e - 1][0];
-      var f = c[e][1] - c[e - 1][1];
-      var d = c[e][2] - c[e - 1][2];
+      let a = c[e][0] - c[e - 1][0];
+      let f = c[e][1] - c[e - 1][1];
+      let d = c[e][2] - c[e - 1][2];
       b.push(pretreatment(a < 4095 ? a : 4095, 2, false));
       b.push(pretreatment(f < 4095 ? f : 4095, 2, false));
-      b.push(pretreatment(d < 16777215 ? d : 16777215, 4, true))
+      b.push(pretreatment(d < 16777215 ? d : 16777215, 4, true));
     }
   }
-  return b.join("")
+  return b.join('');
 }
 
 const HZ = 20;
@@ -448,7 +444,7 @@ class MousePosFaker {
     }
     for (let i = 0; i < this.STEP; i++) {
       x = this.puzzleX / (n * (i + 1));
-      const currX = parseInt((Math.random() * 30 - 15) + x, 10);
+      const currX = parseInt(Math.random() * 30 - 15 + x, 10);
       const currY = parseInt(Math.random() * 7 - 3, 10);
       const currDuration = parseInt((Math.random() * 0.4 + 0.8) * duration, 10);
 
@@ -473,7 +469,7 @@ class MousePosFaker {
     }
   }
 
-  moveToAndCollect({x, y, duration}) {
+  moveToAndCollect({ x, y, duration }) {
     let movedX = 0;
     let movedY = 0;
     let movedT = 0;
@@ -508,8 +504,8 @@ class MousePosFaker {
   }
 }
 
-function injectToRequest(fn,scene = 'cww', ua = '') {
-  if(ua) UA = ua
+function injectToRequest(fn, scene = 'cww', ua = '') {
+  if (ua) UA = ua;
   return (opts, cb) => {
     fn(opts, async (err, resp, data) => {
       if (err) {
@@ -518,13 +514,13 @@ function injectToRequest(fn,scene = 'cww', ua = '') {
       }
       if (data.search('验证') > -1) {
         console.log('JDJR验证中......');
-				let arr = opts.url.split("&")
-				let eid = ''
-				for(let i of arr){
-					if(i.indexOf("eid=")>-1){
-						eid = i.split("=") && i.split("=")[1] || ''
-					}
-				}
+        let arr = opts.url.split('&');
+        let eid = '';
+        for (let i of arr) {
+          if (i.indexOf('eid=') > -1) {
+            eid = (i.split('=') && i.split('=')[1]) || '';
+          }
+        }
         const res = await new JDJRValidator().run(scene, eid);
 
         opts.url += `&validate=${res.validate}`;

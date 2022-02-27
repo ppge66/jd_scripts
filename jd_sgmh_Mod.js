@@ -1,23 +1,23 @@
 /*
 cron:20 8 * * * 
  */
-const $ = new Env('闪购盲盒互助版'),
-  // Node.js用户请在jdCookie.js处填写京东ck;
-  jdCookieNode = $.isNode() ? require('./jdCookie.js') : '',
-  notify = $.isNode() ? require('./sendNotify') : '',
-  JD_API_HOST = `https://api.m.jd.com/client.action`;
-let appId = '1EFRXxg',
-  homeDataFunPrefix = 'interact_template',
-  collectScoreFunPrefix = 'harmony',
-  message = '',
-  lotteryResultFunPrefix = homeDataFunPrefix,
-  browseTime = 6;
+const $ = new Env('闪购盲盒互助版');
+// Node.js用户请在jdCookie.js处填写京东ck;
+const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
+const notify = $.isNode() ? require('./sendNotify') : '';
+const JD_API_HOST = `https://api.m.jd.com/client.action`;
+let appId = '1EFRXxg';
+let homeDataFunPrefix = 'interact_template';
+let collectScoreFunPrefix = 'harmony';
+let message = '';
+let lotteryResultFunPrefix = homeDataFunPrefix;
+let browseTime = 6;
 let myInviteCode;
-let shareCodes = [],
-  llcanhelp = true,
-  // IOS等用户直接用NobyDa的jd cookie
-  cookiesArr = [],
-  cookie = '';
+let shareCodes = [];
+let llcanhelp = true;
+// IOS等用户直接用NobyDa的jd cookie
+let cookiesArr = [];
+let cookie = '';
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item]);

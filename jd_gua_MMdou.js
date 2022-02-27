@@ -2,24 +2,24 @@
 cron:21 9 * * *
 */
 
-const $ = new Env('MM领京豆'),
-  jdCookieNode = $.isNode() ? require('./jdCookie.js') : '',
-  notify = $.isNode() ? require('./sendNotify') : '',
-  jdVersion = '10.1.2',
-  iphoneVersion = [Math.ceil(Math.random() * 2 + 12), Math.ceil(Math.random() * 4)],
-  UA = `jdapp;iPhone;${jdVersion};${Math.ceil(Math.random() * 2 + 12)}.${Math.ceil(Math.random() * 4)};${randomString(40)};network/wifi;model/iPhone12,1;addressid/0;appBuild/167802;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS ${iphoneVersion[0]}_${iphoneVersion[1]} like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1`,
-  UUID = (UA.split(';') && UA.split(';')[4]) || '';
+const $ = new Env('MM领京豆');
+const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
+const notify = $.isNode() ? require('./sendNotify') : '';
+const jdVersion = '10.1.2';
+const iphoneVersion = [Math.ceil(Math.random() * 2 + 12), Math.ceil(Math.random() * 4)];
+const UA = `jdapp;iPhone;${jdVersion};${Math.ceil(Math.random() * 2 + 12)}.${Math.ceil(Math.random() * 4)};${randomString(40)};network/wifi;model/iPhone12,1;addressid/0;appBuild/167802;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS ${iphoneVersion[0]}_${iphoneVersion[1]} like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1`;
+const UUID = (UA.split(';') && UA.split(';')[4]) || '';
 function randomString(e) {
   e = e || 32;
-  let t = 'abcdef0123456789',
-    a = t.length,
-    n = '';
-  for (i = 0; i < e; i++) n += t.charAt(Math.floor(Math.random() * a));
+  let t = 'abcdef0123456789';
+  let a = t.length;
+  let n = '';
+  for (let i = 0; i < e; i++) n += t.charAt(Math.floor(Math.random() * a));
   return n;
 }
 
-let cookiesArr = [],
-  message = '';
+let cookiesArr = [];
+let message = '';
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item]);
@@ -122,8 +122,8 @@ async function task() {
 }
 
 async function takePostRequest(type) {
-  let body = ``,
-    myRequest = ``;
+  let body = ``;
+  let myRequest = ``;
   switch (type) {
     case 'beanTaskList':
     case 'beanTaskList1':
@@ -220,15 +220,15 @@ async function dealReturn(type, res) {
 }
 async function getGetRequest(type, body) {
   let url = `https://api.m.jd.com/client.action?functionId=${type}&body=${body}&appid=ld&client=apple&clientVersion=${jdVersion}&networkType=wifi&osVersion=${iphoneVersion[0]}.${iphoneVersion[1]}&uuid=${UUID}&openudid=${UUID}`;
-  const method = `GET`,
-    headers = {
-      Accept: '*/*',
-      'Accept-Encoding': 'gzip, deflate, br',
-      'Accept-Language': 'zh-cn',
-      Cookie: $.cookie,
-      Referer: 'https://h5.m.jd.com/',
-      'User-Agent': UA,
-    };
+  const method = `GET`;
+  const headers = {
+    Accept: '*/*',
+    'Accept-Encoding': 'gzip, deflate, br',
+    'Accept-Language': 'zh-cn',
+    Cookie: $.cookie,
+    Referer: 'https://h5.m.jd.com/',
+    'User-Agent': UA,
+  };
   return { url: url, method: method, headers: headers };
 }
 // 随机数

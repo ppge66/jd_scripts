@@ -2,15 +2,15 @@
 cron:0 6 * * * 
 */
 // 详细说明参考 https://github.com/ccwav/QLScript2.
-const $ = new Env('京东极速版任务'),
-  notify = $.isNode() ? require('./sendNotify') : '',
-  jdCookieNode = $.isNode() ? require('./jdCookie.js') : '',
-  JD_API_HOST = 'https://api.m.jd.com/',
-  actCode = 'visa-card-001';
-let llAPIError = false,
-  cookiesArr = [],
-  cookie = '',
-  message;
+const $ = new Env('京东极速版任务');
+const notify = $.isNode() ? require('./sendNotify') : '';
+const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
+const JD_API_HOST = 'https://api.m.jd.com/';
+const actCode = 'visa-card-001';
+let llAPIError = false;
+let cookiesArr = [];
+let cookie = '';
+let message;
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item]);
@@ -158,17 +158,17 @@ async function sign() {
 }
 
 async function orderReward(type) {
-  let t = Number(new Date()),
-    headers = {
-      Host: 'api.m.jd.com',
-      accept: 'application/json, text/plain, */*',
-      'content-type': 'application/x-www-form-urlencoded',
-      origin: 'https://palace.m.jd.com',
-      'accept-language': 'zh-cn',
-      'user-agent': $.isNode() ? (process.env.JS_USER_AGENT ? process.env.JS_USER_AGENT : require('./JS_USER_AGENTS').USER_AGENT) : $.getdata('JSUA') ? $.getdata('JSUA') : "'jdltapp;iPad;3.1.0;14.4;network/wifi;Mozilla/5.0 (iPad; CPU OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1",
-      referer: 'https://palace.m.jd.com/?lng=110.917107&lat=22.2706&sid=abefac3cfbcb550b542e4c064dbcabfw&un_area=19_1684_1687_6233',
-      Cookie: cookie,
-    };
+  let t = Number(new Date());
+  let headers = {
+    Host: 'api.m.jd.com',
+    accept: 'application/json, text/plain, */*',
+    'content-type': 'application/x-www-form-urlencoded',
+    origin: 'https://palace.m.jd.com',
+    'accept-language': 'zh-cn',
+    'user-agent': $.isNode() ? (process.env.JS_USER_AGENT ? process.env.JS_USER_AGENT : require('./JS_USER_AGENTS').USER_AGENT) : $.getdata('JSUA') ? $.getdata('JSUA') : "'jdltapp;iPad;3.1.0;14.4;network/wifi;Mozilla/5.0 (iPad; CPU OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1",
+    referer: 'https://palace.m.jd.com/?lng=110.917107&lat=22.2706&sid=abefac3cfbcb550b542e4c064dbcabfw&un_area=19_1684_1687_6233',
+    Cookie: cookie,
+  };
   if (type) {
     var dataString = `functionId=OrderRewardService&body={"method":"receiveReward","data":{"orderQty":${type}}}&_t=${t}&appid=market-task-h5&eid=`;
   } else {

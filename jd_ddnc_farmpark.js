@@ -1,16 +1,16 @@
 /*
 cron:30 7 * * * 
 */
-const $ = new Env('东东乐园'),
-  // Node.js用户请在jdCookie.js处填写京东ck;
-  jdCookieNode = $.isNode() ? require('./jdCookie.js') : '',
-  randomCount = $.isNode() ? 20 : 5,
-  notify = $.isNode() ? require('./sendNotify') : '';
-let merge = {},
-  codeList = [],
-  // IOS等用户直接用NobyDa的jd cookie
-  cookiesArr = [],
-  cookie = '';
+const $ = new Env('东东乐园');
+// Node.js用户请在jdCookie.js处填写京东ck;
+const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
+const randomCount = $.isNode() ? 20 : 5;
+const notify = $.isNode() ? require('./sendNotify') : '';
+let merge = {};
+let codeList = [];
+// IOS等用户直接用NobyDa的jd cookie
+let cookiesArr = [];
+let cookie = '';
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item]);

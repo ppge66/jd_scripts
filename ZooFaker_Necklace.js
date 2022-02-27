@@ -1,6 +1,6 @@
 function safeAdd(x, y) {
-  let lsw = (x & 0xffff) + (y & 0xffff),
-    msw = (x >> 16) + (y >> 16) + (lsw >> 16);
+  let lsw = (x & 0xffff) + (y & 0xffff);
+  let msw = (x >> 16) + (y >> 16) + (lsw >> 16);
   return (msw << 16) | (lsw & 0xffff);
 }
 
@@ -28,8 +28,8 @@ function md5(string, key, raw) {
  * Convert a raw string to a hex string
  */
 function rstr2hex(input) {
-  let hexTab = '0123456789abcdef',
-    output = '';
+  let hexTab = '0123456789abcdef';
+  let output = '';
   let x;
   let i;
   for (i = 0; i < input.length; i += 1) {
@@ -94,10 +94,10 @@ function binlMD5(x, len) {
   let oldb;
   let oldc;
   let oldd;
-  let a = 1732584193,
-    b = -271733879,
-    c = -1732584194,
-    d = 271733878;
+  let a = 1732584193;
+  let b = -271733879;
+  let c = -1732584194;
+  let d = 271733878;
 
   for (i = 0; i < x.length; i += 16) {
     olda = a;
@@ -185,8 +185,8 @@ function binlMD5(x, len) {
  */
 function binl2rstr(input) {
   let i;
-  let output = '',
-    length32 = input.length * 32;
+  let output = '';
+  let length32 = input.length * 32;
   for (i = 0; i < length32; i += 8) {
     output += String.fromCharCode((input[i >> 5] >>> i % 32) & 0xff);
   }
@@ -280,8 +280,8 @@ let sha256_hex_digits = '0123456789abcdef';
 /* Add 32-bit integers with 16-bit operations (bug in some JS-interpreters: 
 overflow) */
 function safe_add(x, y) {
-  let lsw = (x & 0xffff) + (y & 0xffff),
-    msw = (x >> 16) + (y >> 16) + (lsw >> 16);
+  let lsw = (x & 0xffff) + (y & 0xffff);
+  let msw = (x >> 16) + (y >> 16) + (lsw >> 16);
   return (msw << 16) | (lsw & 0xffff);
 }
 
@@ -347,9 +347,9 @@ function sha256_transform() {
 
 /* Read the next chunk of data and update the SHA256 computation */
 function sha256_update(data, inputLen) {
-  let i,
-    index,
-    curpos = 0;
+  let i;
+  let index;
+  let curpos = 0;
   /* Compute number of bytes mod 64 */
   index = (count[0] >> 3) & 0x3f;
   let remainder = inputLen & 0x3f;
@@ -393,8 +393,8 @@ function sha256_final() {
 
 /* Split the internal hash values into an array of bytes */
 function sha256_encode_bytes() {
-  let j = 0,
-    output = new Array(32);
+  let j = 0;
+  let output = new Array(32);
   for (let i = 0; i < 8; i++) {
     output[j++] = (ihash[i] >>> 24) & 0xff;
     output[j++] = (ihash[i] >>> 16) & 0xff;
@@ -431,8 +431,8 @@ let utils = {
     bypass: ''.concat('https://blackhole', '.m.jd.com/bypass'),
   },
   getTouchSession: function () {
-    let e = new Date().getTime(),
-      t = this.getRandomInt(1e3, 9999);
+    let e = new Date().getTime();
+    let t = this.getRandomInt(1e3, 9999);
     return String(e) + String(t);
   },
   sha256: function (data) {
@@ -472,11 +472,11 @@ let utils = {
     return ''.concat(e.substring(t, e.length)) + ''.concat(e.substring(0, t));
   },
   encrypt2: function (e, t) {
-    let n = t.toString(),
-      r = t.toString().length,
-      i = parseInt((r + e.length) / 3),
-      o = '',
-      a = '';
+    let n = t.toString();
+    let r = t.toString().length;
+    let i = parseInt((r + e.length) / 3);
+    let o = '';
+    let a = '';
     return r > e.length ? ((o = this.len_Fun(n, i)), (a = this.encrypt1(e, o))) : ((o = this.len_Fun(e, i)), (a = this.encrypt1(n, o))), a;
   },
   addZeroFront: function (e) {
@@ -486,11 +486,11 @@ let utils = {
     return e && e.length >= 5 ? e : (String(e) + '00000').substr(0, 5);
   },
   encrypt3: function (e, t) {
-    let n = this.addZeroBack(t).toString().substring(0, 5),
-      r = this.addZeroFront(e).substring(e.length - 5),
-      i = n.length,
-      o = encrypt_3(Array(i).keys()),
-      a = [];
+    let n = this.addZeroBack(t).toString().substring(0, 5);
+    let r = this.addZeroFront(e).substring(e.length - 5);
+    let i = n.length;
+    let o = encrypt_3(Array(i).keys());
+    let a = [];
     return (
       o.forEach((e) => {
         a.push(Math.abs(n.charCodeAt(e) - r.charCodeAt(e)));
@@ -505,8 +505,8 @@ let utils = {
     return this.getCurrentDate().getTime();
   },
   getRandomInt: function () {
-    let e = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : 0,
-      t = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : 9;
+    let e = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : 0;
+    let t = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : 9;
     return (e = Math.ceil(e)), (t = Math.floor(t)), Math.floor(Math.random() * (t - e + 1)) + e;
   },
   getRandomWord: function (e) {
@@ -530,8 +530,8 @@ let utils = {
   toAscii: function (e) {
     let t = '';
     for (let n in e) {
-      let r = e[n],
-        i = /[a-zA-Z]/.test(r);
+      let r = e[n];
+      let i = /[a-zA-Z]/.test(r);
       e.hasOwnProperty(n) && (t += i ? this.getLastAscii(r) : r);
     }
     return t;
@@ -540,13 +540,13 @@ let utils = {
     return (Array(t).join('0') + e).slice(-t);
   },
   minusByByte: function (e, t) {
-    let n = e.length,
-      r = t.length,
-      i = Math.max(n, r),
-      o = this.toAscii(e),
-      a = this.toAscii(t),
-      s = '',
-      u = 0;
+    let n = e.length;
+    let r = t.length;
+    let i = Math.max(n, r);
+    let o = this.toAscii(e);
+    let a = this.toAscii(t);
+    let s = '';
+    let u = 0;
     for (n !== r && ((o = this.add0(o, i)), (a = this.add0(a, i))); u < i; ) (s += Math.abs(o[u] - a[u])), u++;
     return s;
   },
@@ -554,8 +554,8 @@ let utils = {
     let table =
       '00000000 77073096 EE0E612C 990951BA 076DC419 706AF48F E963A535 9E6495A3 0EDB8832 79DCB8A4 E0D5E91E 97D2D988 09B64C2B 7EB17CBD E7B82D07 90BF1D91 1DB71064 6AB020F2 F3B97148 84BE41DE 1ADAD47D 6DDDE4EB F4D4B551 83D385C7 136C9856 646BA8C0 FD62F97A 8A65C9EC 14015C4F 63066CD9 FA0F3D63 8D080DF5 3B6E20C8 4C69105E D56041E4 A2677172 3C03E4D1 4B04D447 D20D85FD A50AB56B 35B5A8FA 42B2986C DBBBC9D6 ACBCF940 32D86CE3 45DF5C75 DCD60DCF ABD13D59 26D930AC 51DE003A C8D75180 BFD06116 21B4F4B5 56B3C423 CFBA9599 B8BDA50F 2802B89E 5F058808 C60CD9B2 B10BE924 2F6F7C87 58684C11 C1611DAB B6662D3D 76DC4190 01DB7106 98D220BC EFD5102A 71B18589 06B6B51F 9FBFE4A5 E8B8D433 7807C9A2 0F00F934 9609A88E E10E9818 7F6A0DBB 086D3D2D 91646C97 E6635C01 6B6B51F4 1C6C6162 856530D8 F262004E 6C0695ED 1B01A57B 8208F4C1 F50FC457 65B0D9C6 12B7E950 8BBEB8EA FCB9887C 62DD1DDF 15DA2D49 8CD37CF3 FBD44C65 4DB26158 3AB551CE A3BC0074 D4BB30E2 4ADFA541 3DD895D7 A4D1C46D D3D6F4FB 4369E96A 346ED9FC AD678846 DA60B8D0 44042D73 33031DE5 AA0A4C5F DD0D7CC9 5005713C 270241AA BE0B1010 C90C2086 5768B525 206F85B3 B966D409 CE61E49F 5EDEF90E 29D9C998 B0D09822 C7D7A8B4 59B33D17 2EB40D81 B7BD5C3B C0BA6CAD EDB88320 9ABFB3B6 03B6E20C 74B1D29A EAD54739 9DD277AF 04DB2615 73DC1683 E3630B12 94643B84 0D6D6A3E 7A6A5AA8 E40ECF0B 9309FF9D 0A00AE27 7D079EB1 F00F9344 8708A3D2 1E01F268 6906C2FE F762575D 806567CB 196C3671 6E6B06E7 FED41B76 89D32BE0 10DA7A5A 67DD4ACC F9B9DF6F 8EBEEFF9 17B7BE43 60B08ED5 D6D6A3E8 A1D1937E 38D8C2C4 4FDFF252 D1BB67F1 A6BC5767 3FB506DD 48B2364B D80D2BDA AF0A1B4C 36034AF6 41047A60 DF60EFC3 A867DF55 316E8EEF 4669BE79 CB61B38C BC66831A 256FD2A0 5268E236 CC0C7795 BB0B4703 220216B9 5505262F C5BA3BBE B2BD0B28 2BB45A92 5CB36A04 C2D7FFA7 B5D0CF31 2CD99E8B 5BDEAE1D 9B64C2B0 EC63F226 756AA39C 026D930A 9C0906A9 EB0E363F 72076785 05005713 95BF4A82 E2B87A14 7BB12BAE 0CB61B38 92D28E9B E5D5BE0D 7CDCEFB7 0BDBDF21 86D3D2D4 F1D4E242 68DDB3F8 1FDA836E 81BE16CD F6B9265B 6FB077E1 18B74777 88085AE6 FF0F6A70 66063BCA 11010B5C 8F659EFF F862AE69 616BFFD3 166CCF45 A00AE278 D70DD2EE 4E048354 3903B3C2 A7672661 D06016F7 4969474D 3E6E77DB AED16A4A D9D65ADC 40DF0B66 37D83BF0 A9BCAE53 DEBB9EC5 47B2CF7F 30B5FFE9 BDBDF21C CABAC28A 53B39330 24B4A3A6 BAD03605 CDD70693 54DE5729 23D967BF B3667A2E C4614AB8 5D681B02 2A6F2B94 B40BBE37 C30C8EA1 5A05DF1B 2D02EF8D';
     crc = 0 ^ -1;
-    let n = 0, // a number between 0 and 255
-      x = 0; // an hex number
+    let n = 0; // a number between 0 and 255
+    let x = 0; // an hex number
 
     for (let i = 0, iTop = str.length; i < iTop; i++) {
       n = (crc ^ str.charCodeAt(i)) & 0xff;
@@ -565,8 +565,8 @@ let utils = {
     return (crc ^ -1) >>> 0;
   },
   getCrcCode: function (e) {
-    let t = '0000000',
-      n = '';
+    let t = '0000000';
+    let n = '';
     try {
       (n = this.Crc32(e).toString(36)), (t = this.addZeroToSeven(n));
     } catch (e) {}
@@ -585,10 +585,10 @@ let utils = {
     );
   },
   RecursiveSorting: function () {
-    let e = this,
-      t = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {},
-      n = {},
-      r = t;
+    let e = this;
+    let t = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {};
+    let n = {};
+    let r = t;
     if (Object.prototype.toString.call(r) == '[object Object]') {
       let i = Object.keys(r).sort((e, t) => {
         return e < t ? -1 : e > t ? 1 : 0;
@@ -613,8 +613,8 @@ let utils = {
     return n;
   },
   objToString2: function () {
-    let e = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {},
-      t = '';
+    let e = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {};
+    let t = '';
     return (
       Object.keys(e).forEach((n) => {
         let r = e[n];
@@ -637,18 +637,18 @@ let utils = {
     let r = this;
     return {
       1: function () {
-        let e = r.getNumberInString(t),
-          i = r.getSpecialPosition(n);
+        let e = r.getNumberInString(t);
+        let i = r.getSpecialPosition(n);
         return Math.abs(e - i);
       },
       2: function () {
-        let e = r.getSpecialPosition(t, !1),
-          i = r.getSpecialPosition(n);
+        let e = r.getSpecialPosition(t, !1);
+        let i = r.getSpecialPosition(n);
         return r.minusByByte(e, i);
       },
       3: function () {
-        let e = t.slice(0, 5),
-          i = String(n).slice(-5);
+        let e = t.slice(0, 5);
+        let i = String(n).slice(-5);
         return r.minusByByte(e, i);
       },
       4: function () {
@@ -663,16 +663,16 @@ let utils = {
     }[e]();
   },
   decipherJoyToken: function (e, t) {
-    let m = this,
-      n = {
-        jjt: 'a',
-        expire: m.getCurrentTime(),
-        outtime: 3,
-        time_correction: !1,
-      },
-      r = '',
-      i = e.indexOf(t) + t.length,
-      o = e.length;
+    let m = this;
+    let n = {
+      jjt: 'a',
+      expire: m.getCurrentTime(),
+      outtime: 3,
+      time_correction: !1,
+    };
+    let r = '';
+    let i = e.indexOf(t) + t.length;
+    let o = e.length;
     if (
       (r = (r = e.slice(i, o).split('.')).map((e) => {
         return m.atobPolyfill(e);
@@ -680,9 +680,9 @@ let utils = {
       r[0] &&
       r[2]
     ) {
-      let a = r[0].slice(2, 7),
-        s = r[0].slice(7, 9),
-        u = m.xorEncrypt(r[1] || '', a).split('~');
+      let a = r[0].slice(2, 7);
+      let s = r[0].slice(7, 9);
+      let u = m.xorEncrypt(r[1] || '', a).split('~');
       (n.outtime = u[3] - 0), (n.encrypt_id = u[2]), (n.jjt = 't');
       let c = u[0] - 0 || 0;
       c && typeof c === 'number' && ((n.time_correction = !0), (n.expire = c));
@@ -694,32 +694,32 @@ let utils = {
   sha1: function (s) {
     let data = new Uint8Array(this.encodeUTF8(s));
     var i, j, t;
-    var l = (((data.length + 8) >>> 6) << 4) + 16,
-      s = new Uint8Array(l << 2);
+    let l = (((data.length + 8) >>> 6) << 4) + 16;
+    var s = new Uint8Array(l << 2);
     s.set(new Uint8Array(data.buffer)), (s = new Uint32Array(s.buffer));
     for (t = new DataView(s.buffer), i = 0; i < l; i++) s[i] = t.getUint32(i << 2);
     s[data.length >> 2] |= 0x80 << (24 - (data.length & 3) * 8);
     s[l - 1] = data.length << 3;
-    var w = [],
-      f = [
-        function () {
-          return (m[1] & m[2]) | (~m[1] & m[3]);
-        },
-        function () {
-          return m[1] ^ m[2] ^ m[3];
-        },
-        function () {
-          return (m[1] & m[2]) | (m[1] & m[3]) | (m[2] & m[3]);
-        },
-        function () {
-          return m[1] ^ m[2] ^ m[3];
-        },
-      ],
-      rol = function (n, c) {
-        return (n << c) | (n >>> (32 - c));
+    let w = [];
+    let f = [
+      function () {
+        return (m[1] & m[2]) | (~m[1] & m[3]);
       },
-      k = [1518500249, 1859775393, -1894007588, -899497514],
-      m = [1732584193, -271733879, null, null, -1009589776];
+      function () {
+        return m[1] ^ m[2] ^ m[3];
+      },
+      function () {
+        return (m[1] & m[2]) | (m[1] & m[3]) | (m[2] & m[3]);
+      },
+      function () {
+        return m[1] ^ m[2] ^ m[3];
+      },
+    ];
+    let rol = function (n, c) {
+      return (n << c) | (n >>> (32 - c));
+    };
+    let k = [1518500249, 1859775393, -1894007588, -899497514];
+    var m = [1732584193, -271733879, null, null, -1009589776];
     (m[2] = ~m[0]), (m[3] = ~m[1]);
     for (var i = 0; i < s.length; i += 16) {
       let o = m.slice(0);
@@ -737,10 +737,10 @@ let utils = {
     return hex.toString().toUpperCase();
   },
   encodeUTF8: function (s) {
-    let i,
-      r = [],
-      c,
-      x;
+    let i;
+    let r = [];
+    let c;
+    let x;
     for (i = 0; i < s.length; i++)
       if ((c = s.charCodeAt(i)) < 0x80) r.push(c);
       else if (c < 0x800) r.push(0xc0 + ((c >> 6) & 0x1f), 0x80 + (c & 0x3f));
@@ -818,28 +818,28 @@ let utils = {
       },
     };
     const ids = ['x', 'y', 'z'];
-    let encrypeid = ids[Math.floor(Math.random() * 1e8) % ids.length],
-      timestamp = this.getCurrentTime(),
-      nonce_str = this.getRandomWord(10),
-      isDefaultKey = 'B';
+    let encrypeid = ids[Math.floor(Math.random() * 1e8) % ids.length];
+    let timestamp = this.getCurrentTime();
+    let nonce_str = this.getRandomWord(10);
+    let isDefaultKey = 'B';
     refer = 'com.miui.home';
     encrypeid = 'x';
     let json = {
-        r: refer,
-        a: '',
-        c: 'a',
-        v: '2.5.8',
-        t: timestamp.toString().substring(timestamp.toString().length - 4),
-      },
-      token = md5(pin),
-      key = encrypefun[encrypeid](timestamp.toString(), nonce_str),
-      // console.log(key);
-      cipher = encrypefun['jiami'](JSON.stringify(json), key);
+      r: refer,
+      a: '',
+      c: 'a',
+      v: '2.5.8',
+      t: timestamp.toString().substring(timestamp.toString().length - 4),
+    };
+    let token = md5(pin);
+    let key = encrypefun[encrypeid](timestamp.toString(), nonce_str);
+    // console.log(key);
+    let cipher = encrypefun['jiami'](JSON.stringify(json), key);
     return `${timestamp}~1${nonce_str + token}~${encrypeid}~~~${isDefaultKey}~${cipher}~${this.getCrcCode(cipher)}`;
   },
   get_risk_result: async function ($) {
-    let appid = '50082',
-      TouchSession = this.getTouchSession();
+    let appid = '50082';
+    let TouchSession = this.getTouchSession();
     if (!$.joyytoken || $.joyytoken_count > 18) {
       $.joyytoken = JSON.parse(await this.gettoken($.UA))['joyytoken'];
       $.joyytoken_count = 0;
@@ -864,20 +864,20 @@ let utils = {
     }
 
     let random = Math.floor(1e6 * Math.random())
-        .toString()
-        .padEnd(6, '8'),
-      senddata = this.objToString2(
-        this.RecursiveSorting({
-          pin: $.UserName,
-          random,
-          ...riskData,
-        }),
-      ),
-      time = this.getCurrentTime(),
-      encrypt_id = this.decipherJoyToken(appid + $.joyytoken, appid)['encrypt_id'].split(','),
-      nonce_str = this.getRandomWord(10),
-      key = this.getKey(encrypt_id[2], nonce_str, time.toString()),
-      str1 = `${senddata}&token=${$.joyytoken}&time=${time}&nonce_str=${nonce_str}&key=${key}&is_trust=1`;
+      .toString()
+      .padEnd(6, '8');
+    let senddata = this.objToString2(
+      this.RecursiveSorting({
+        pin: $.UserName,
+        random,
+        ...riskData,
+      }),
+    );
+    let time = this.getCurrentTime();
+    let encrypt_id = this.decipherJoyToken(appid + $.joyytoken, appid)['encrypt_id'].split(',');
+    let nonce_str = this.getRandomWord(10);
+    let key = this.getKey(encrypt_id[2], nonce_str, time.toString());
+    let str1 = `${senddata}&token=${$.joyytoken}&time=${time}&nonce_str=${nonce_str}&key=${key}&is_trust=1`;
     str1 = this.sha1(str1);
     let outstr = [time, '1' + nonce_str + $.joyytoken, encrypt_id[2] + ',' + encrypt_id[3]];
     outstr.push(str1);
