@@ -105,6 +105,7 @@ for (let i in productsArr) {
       } else $.cleancartProductsArr = false;
       if ($.cleancartProductsArr) console.log($.cleancartProductsArr);
       await run();
+      await $.wait(6000);
       if ($.out) break;
     }
   }
