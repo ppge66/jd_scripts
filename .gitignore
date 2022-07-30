@@ -11,5 +11,5 @@ package-lock.json
 task/jdCookie.js
 task/ql.js
 task/sendNotify.js
-.DS_Store
-.DS_Store
+Fruit_ShareCache.json
+**/.DS_Store
